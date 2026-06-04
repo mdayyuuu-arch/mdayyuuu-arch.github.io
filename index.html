@@ -1,33 +1,60 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Mohammed Ayaan | Cybersecurity Portfolio</title>
+
+<meta name="description" content="Mohammed Ayaan - Cybersecurity Student, Ethical Hacker, Python & AI Developer Portfolio">
+<meta name="keywords" content="Cybersecurity, Ethical Hacking, Python Developer, AI, Security Research">
+<meta name="author" content="Mohammed Ayaan">
 
 <style>
 body {
     margin: 0;
-    font-family: Arial;
-    background: #0f172a;
+    font-family: Arial, sans-serif;
+    background: black;
     color: #e2e8f0;
+    overflow-x: hidden;
 }
 
+/* MATRIX BACKGROUND */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* HEADER */
 header {
     text-align: center;
-    padding: 60px;
-    background: #111827;
+    padding: 80px 20px;
 }
 
-header img {
+img {
     width: 140px;
+    height: 140px;
     border-radius: 50%;
     border: 3px solid #38bdf8;
+    animation: float 3s ease-in-out infinite;
 }
 
+h1 {
+    font-size: 38px;
+    margin: 10px 0;
+}
+
+.typing {
+    font-size: 18px;
+    color: #38bdf8;
+    height: 25px;
+}
+
+/* SECTIONS */
 section {
-    max-width: 800px;
+    max-width: 900px;
     margin: auto;
     padding: 20px;
 }
@@ -37,50 +64,143 @@ h2 {
     border-bottom: 1px solid #334155;
 }
 
+/* CARDS */
 .card {
-    background: #111827;
+    background: rgba(17, 24, 39, 0.8);
     padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
+    margin: 12px 0;
+    border-radius: 12px;
+    border: 1px solid #1f2937;
+    transition: 0.3s;
 }
 
-a {
-    color: #38bdf8;
+.card:hover {
+    transform: scale(1.03);
+    border-color: #38bdf8;
+}
+
+/* BUTTONS */
+a.button {
+    display: inline-block;
+    padding: 8px 12px;
+    margin-top: 10px;
+    background: #38bdf8;
+    color: black;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* FLOAT */
+@keyframes float {
+    0% {transform: translateY(0px);}
+    50% {transform: translateY(-10px);}
+    100% {transform: translateY(0px);}
 }
 </style>
 </head>
 
 <body>
 
+<!-- MATRIX BACKGROUND -->
+<canvas id="matrix"></canvas>
+
 <header>
     <img src="https://i.ibb.co/4pDNDk1/hacker.png">
+
     <h1>Mohammed Ayaan</h1>
-    <p>Cybersecurity Student | Ethical Hacker | Python Developer</p>
+
+    <div class="typing" id="typing"></div>
 </header>
 
 <section>
     <h2>About Me</h2>
     <div class="card">
-        I build secure systems and explore ethical hacking.
+        Cybersecurity Student focused on ethical hacking, penetration testing, and AI-powered security systems.
     </div>
 
     <h2>Skills</h2>
     <div class="card">
-        Python • Linux • Networking • Web Security
+        Python • Linux • Networking • OWASP • Burp Suite • Nmap • AI Security
     </div>
 
     <h2>Projects</h2>
+
     <div class="card">
-        Cybersecurity Labs<br>
-        Python Security Tools<br>
-        GitHub Projects
+        <b>Cybersecurity Labs</b><br>
+        Practice labs for penetration testing and vulnerability research.
+        <br><a class="button" href="https://github.com/">View</a>
+    </div>
+
+    <div class="card">
+        <b>Python Security Tools</b><br>
+        Automation tools for scanning and reconnaissance.
+        <br><a class="button" href="https://github.com/">View</a>
+    </div>
+
+    <div class="card">
+        <b>AI Security Research</b><br>
+        Experiments with AI-driven cybersecurity systems.
+        <br><a class="button" href="https://github.com/">View</a>
     </div>
 
     <h2>Contact</h2>
     <div class="card">
-        GitHub: <a href="https://github.com/mdayyuuu-arch">View Profile</a>
+        GitHub: <a href="https://github.com/mdayyuuu-arch">Profile</a><br>
+        Portfolio: <a href="https://mdayyuuu-arch.github.io">Live Site</a>
     </div>
 </section>
+
+<script>
+/* TYPING EFFECT */
+const text = "Ethical Hacker | Cybersecurity Student | AI Developer";
+let i = 0;
+function type() {
+    if (i < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, 60);
+    }
+}
+type();
+
+/* MATRIX EFFECT */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+let letters = "01";
+letters = letters.split("");
+
+let fontSize = 14;
+let columns = canvas.width / fontSize;
+
+let drops = [];
+for (let x = 0; x < columns; x++)
+    drops[x] = 1;
+
+function draw() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#0f0";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+        let text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+            drops[i] = 0;
+
+        drops[i]++;
+    }
+}
+
+setInterval(draw, 33);
+</script>
 
 </body>
 </html>
