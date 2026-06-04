@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,101 +19,53 @@ body {
     overflow-x: hidden;
 }
 
-/* MATRIX */
-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
-
-/* HEADER */
 header {
     text-align: center;
     padding: 70px 20px;
 }
 
-img {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    border: 3px solid #38bdf8;
-    animation: float 3s infinite ease-in-out;
-}
-
 h1 {
     font-size: 38px;
-    margin: 10px 0;
 }
 
-.typing {
-    color: #38bdf8;
-    font-size: 18px;
-    height: 25px;
-}
-
-/* SECTIONS */
 section {
     max-width: 900px;
     margin: auto;
     padding: 20px;
 }
 
-h2 {
-    color: #38bdf8;
-    border-bottom: 1px solid #334155;
-}
-
-/* CARDS */
 .card {
-    background: rgba(17, 24, 39, 0.85);
+    background: #111827;
     padding: 15px;
     margin: 12px 0;
-    border-radius: 12px;
+    border-radius: 10px;
     border: 1px solid #1f2937;
-    transition: 0.3s;
 }
 
-.card:hover {
-    transform: scale(1.03);
-    border-color: #38bdf8;
-}
-
-/* BUTTON */
 a {
     color: #38bdf8;
     text-decoration: none;
-}
-
-/* FLOAT ANIMATION */
-@keyframes float {
-    0% {transform: translateY(0);}
-    50% {transform: translateY(-10px);}
-    100% {transform: translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="matrix"></canvas>
-
 <header>
-    <img src="https://i.ibb.co/4pDNDk1/hacker.png">
     <h1>Mohammed Ayaan</h1>
-    <div class="typing" id="typing"></div>
+    <p>Cybersecurity Student | Ethical Hacker | Python Developer</p>
 </header>
 
 <section>
 
 <h2>About Me</h2>
 <div class="card">
-Cybersecurity student focused on ethical hacking, penetration testing, and AI security systems.
+I build secure systems and explore ethical hacking.
 </div>
 
 <h2>Skills</h2>
 <div class="card">
-Python • Linux • Networking • OWASP • Burp Suite • Nmap • AI Security
+Python • Linux • Networking • Web Security • AI Security
 </div>
 
 <h2>Projects</h2>
@@ -124,74 +75,15 @@ Python Security Tools<br>
 GitHub Projects
 </div>
 
-<h2>GitHub Stats</h2>
-
-<div class="card" style="text-align:center;">
-    <img src="https://github-readme-stats.vercel.app/api?username=mdayyuuu-arch&show_icons=true&theme=tokyonight" style="width:100%; max-width:500px;">
-</div>
-
-<div class="card" style="text-align:center;">
-    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=mdayyuuu-arch&layout=compact&theme=tokyonight" style="width:100%; max-width:500px;">
-</div>
-
 <h2>Contact</h2>
 <div class="card">
 GitHub: <a href="https://github.com/mdayyuuu-arch">Profile</a><br>
-Website: <a href="https://mdayyuuu-arch.github.io">Live Portfolio</a>
+Website: <a href="https://mdayyuuu-arch.github.io">Live Site</a>
 </div>
 
 </section>
 
-<script>
-
-/* TYPING EFFECT */
-const text = "Ethical Hacker | Cybersecurity Student | AI Developer";
-let i = 0;
-
-function type() {
-    if (i < text.length) {
-        document.getElementById("typing").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(type, 60);
-    }
-}
-type();
-
-/* MATRIX EFFECT */
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let letters = "01".split("");
-let fontSize = 14;
-let columns = canvas.width / fontSize;
-
-let drops = [];
-for (let x = 0; x < columns; x++) drops[x] = 1;
-
-function draw() {
-    ctx.fillStyle = "rgba(0,0,0,0.05)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle = "#0f0";
-    ctx.font = fontSize + "px monospace";
-
-    for (let i = 0; i < drops.length; i++) {
-        let text = letters[Math.floor(Math.random()*letters.length)];
-        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-
-        if (drops[i]*fontSize > canvas.height && Math.random() > 0.975)
-            drops[i] = 0;
-
-        drops[i]++;
-    }
-}
-
-setInterval(draw, 33);
-
-</script>
-
 </body>
 </html>
+
+
