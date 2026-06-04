@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +7,8 @@
 
 <title>Mohammed Ayaan | Cybersecurity Portfolio</title>
 
-<meta name="description" content="Mohammed Ayaan - Cybersecurity Student, Ethical Hacker, Python & AI Developer Portfolio">
-<meta name="keywords" content="Cybersecurity, Ethical Hacking, Python Developer, AI, Security Research">
+<meta name="description" content="Cybersecurity Portfolio of Mohammed Ayaan - Ethical Hacker, Python Developer, AI Security Researcher">
+<meta name="keywords" content="Cybersecurity, Ethical Hacking, Python, Linux, Nmap, Burp Suite, AI Security">
 <meta name="author" content="Mohammed Ayaan">
 
 <style>
@@ -19,7 +20,7 @@ body {
     overflow-x: hidden;
 }
 
-/* MATRIX BACKGROUND */
+/* MATRIX */
 canvas {
     position: fixed;
     top: 0;
@@ -30,7 +31,7 @@ canvas {
 /* HEADER */
 header {
     text-align: center;
-    padding: 80px 20px;
+    padding: 70px 20px;
 }
 
 img {
@@ -38,7 +39,7 @@ img {
     height: 140px;
     border-radius: 50%;
     border: 3px solid #38bdf8;
-    animation: float 3s ease-in-out infinite;
+    animation: float 3s infinite ease-in-out;
 }
 
 h1 {
@@ -47,8 +48,8 @@ h1 {
 }
 
 .typing {
-    font-size: 18px;
     color: #38bdf8;
+    font-size: 18px;
     height: 25px;
 }
 
@@ -66,7 +67,7 @@ h2 {
 
 /* CARDS */
 .card {
-    background: rgba(17, 24, 39, 0.8);
+    background: rgba(17, 24, 39, 0.85);
     padding: 15px;
     margin: 12px 0;
     border-radius: 12px;
@@ -79,82 +80,74 @@ h2 {
     border-color: #38bdf8;
 }
 
-/* BUTTONS */
-a.button {
-    display: inline-block;
-    padding: 8px 12px;
-    margin-top: 10px;
-    background: #38bdf8;
-    color: black;
-    border-radius: 6px;
+/* BUTTON */
+a {
+    color: #38bdf8;
     text-decoration: none;
-    font-weight: bold;
 }
 
-/* FLOAT */
+/* FLOAT ANIMATION */
 @keyframes float {
-    0% {transform: translateY(0px);}
+    0% {transform: translateY(0);}
     50% {transform: translateY(-10px);}
-    100% {transform: translateY(0px);}
+    100% {transform: translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- MATRIX BACKGROUND -->
 <canvas id="matrix"></canvas>
 
 <header>
     <img src="https://i.ibb.co/4pDNDk1/hacker.png">
-
     <h1>Mohammed Ayaan</h1>
-
     <div class="typing" id="typing"></div>
 </header>
 
 <section>
-    <h2>About Me</h2>
-    <div class="card">
-        Cybersecurity Student focused on ethical hacking, penetration testing, and AI-powered security systems.
-    </div>
 
-    <h2>Skills</h2>
-    <div class="card">
-        Python • Linux • Networking • OWASP • Burp Suite • Nmap • AI Security
-    </div>
+<h2>About Me</h2>
+<div class="card">
+Cybersecurity student focused on ethical hacking, penetration testing, and AI security systems.
+</div>
 
-    <h2>Projects</h2>
+<h2>Skills</h2>
+<div class="card">
+Python • Linux • Networking • OWASP • Burp Suite • Nmap • AI Security
+</div>
 
-    <div class="card">
-        <b>Cybersecurity Labs</b><br>
-        Practice labs for penetration testing and vulnerability research.
-        <br><a class="button" href="https://github.com/">View</a>
-    </div>
+<h2>Projects</h2>
+<div class="card">
+Cybersecurity Labs<br>
+Python Security Tools<br>
+GitHub Projects
+</div>
 
-    <div class="card">
-        <b>Python Security Tools</b><br>
-        Automation tools for scanning and reconnaissance.
-        <br><a class="button" href="https://github.com/">View</a>
-    </div>
+<h2>GitHub Stats</h2>
 
-    <div class="card">
-        <b>AI Security Research</b><br>
-        Experiments with AI-driven cybersecurity systems.
-        <br><a class="button" href="https://github.com/">View</a>
-    </div>
+<div class="card" style="text-align:center;">
+    <img src="https://github-readme-stats.vercel.app/api?username=mdayyuuu-arch&show_icons=true&theme=tokyonight" style="width:100%; max-width:500px;">
+</div>
 
-    <h2>Contact</h2>
-    <div class="card">
-        GitHub: <a href="https://github.com/mdayyuuu-arch">Profile</a><br>
-        Portfolio: <a href="https://mdayyuuu-arch.github.io">Live Site</a>
-    </div>
+<div class="card" style="text-align:center;">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=mdayyuuu-arch&layout=compact&theme=tokyonight" style="width:100%; max-width:500px;">
+</div>
+
+<h2>Contact</h2>
+<div class="card">
+GitHub: <a href="https://github.com/mdayyuuu-arch">Profile</a><br>
+Website: <a href="https://mdayyuuu-arch.github.io">Live Portfolio</a>
+</div>
+
 </section>
 
 <script>
+
 /* TYPING EFFECT */
 const text = "Ethical Hacker | Cybersecurity Student | AI Developer";
 let i = 0;
+
 function type() {
     if (i < text.length) {
         document.getElementById("typing").innerHTML += text.charAt(i);
@@ -168,31 +161,28 @@ type();
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-let letters = "01";
-letters = letters.split("");
-
+let letters = "01".split("");
 let fontSize = 14;
 let columns = canvas.width / fontSize;
 
 let drops = [];
-for (let x = 0; x < columns; x++)
-    drops[x] = 1;
+for (let x = 0; x < columns; x++) drops[x] = 1;
 
 function draw() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
     ctx.fillStyle = "#0f0";
     ctx.font = fontSize + "px monospace";
 
     for (let i = 0; i < drops.length; i++) {
-        let text = letters[Math.floor(Math.random() * letters.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        let text = letters[Math.floor(Math.random()*letters.length)];
+        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
 
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+        if (drops[i]*fontSize > canvas.height && Math.random() > 0.975)
             drops[i] = 0;
 
         drops[i]++;
@@ -200,6 +190,7 @@ function draw() {
 }
 
 setInterval(draw, 33);
+
 </script>
 
 </body>
