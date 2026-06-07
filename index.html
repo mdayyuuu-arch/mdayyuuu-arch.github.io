@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,46 +6,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mohammed Ayaan | Cybersecurity & AI Portfolio</title>
 <meta name="description" content="Portfolio of Mohammed Ayaan - Ethical Hacker, Python Developer, AI & Computer Vision Projects">
-<meta name="keywords" content="Mohammed Ayaan, Cybersecurity, Ethical Hacking, Python, Lane Detection, Fire Detection, OpenCV, AI, Hyderabad">
+<meta name="keywords" content="Mohammed Ayaan, Cybersecurity, Ethical Hacking, Python, Lane Detection, Fire Detection, Crowd Detection, OpenCV, AI, Hyderabad">
 <meta name="author" content="Mohammed Ayaan">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-    font-family: Arial, sans-serif;
-    background: #0a0a0f;
-    color: #e2e8f0;
+    font-family: 'Georgia', serif;
+    background: #0a0008;
+    color: #e2d9f3;
     overflow-x: hidden;
-    background-image: radial-gradient(ellipse at top, #1a0533 0%, #0a0a0f 60%);
+    background-image: 
+        radial-gradient(ellipse at top left, #2d0a4e 0%, #0a0008 50%),
+        radial-gradient(ellipse at bottom right, #1a0a00 0%, #0a0008 50%);
 }
 header {
     text-align: center;
     padding: 70px 20px 40px;
+    border-bottom: 1px solid #b8860b33;
 }
 .avatar {
     width: 130px;
     height: 130px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #7c3aed, #38bdf8);
+    background: linear-gradient(135deg, #4a0080, #b8860b);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 15px;
     font-size: 42px;
     font-weight: bold;
-    color: white;
-    box-shadow: 0 0 25px #7c3aed;
+    color: #ffd700;
+    box-shadow: 0 0 30px #b8860b88, 0 0 60px #4a008044;
     letter-spacing: 2px;
+    border: 2px solid #b8860b;
 }
 h1 {
-    font-size: 36px;
-    background: linear-gradient(90deg, #a78bfa, #38bdf8);
+    font-size: 38px;
+    background: linear-gradient(90deg, #ffd700, #a855f7, #ffd700);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
 }
 header p {
-    color: #94a3b8;
+    color: #b8860b;
     margin-top: 8px;
-    font-size: 14px;
+    font-size: 13px;
+    letter-spacing: 1px;
 }
 section {
     max-width: 900px;
@@ -52,23 +59,35 @@ section {
     padding: 20px;
 }
 h2 {
-    color: #a78bfa;
-    margin: 20px 0 10px;
+    color: #ffd700;
+    margin: 25px 0 10px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-left: 3px solid #b8860b;
+    padding-left: 10px;
 }
 .card {
-    background: rgba(17, 24, 39, 0.8);
-    padding: 15px;
+    background: linear-gradient(135deg, rgba(45,10,78,0.6), rgba(26,10,0,0.6));
+    padding: 18px;
     margin: 12px 0;
     border-radius: 10px;
-    border: 1px solid #2d1b69;
-    backdrop-filter: blur(5px);
+    border: 1px solid #b8860b55;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px #b8860b22;
 }
-a { color: #38bdf8; text-decoration: none; }
+.card:hover {
+    border-color: #ffd700;
+    box-shadow: 0 4px 25px #b8860b55;
+}
+a { color: #ffd700; text-decoration: none; }
 footer {
     text-align: center;
     padding: 30px;
-    color: #475569;
+    color: #b8860b;
     font-size: 13px;
+    border-top: 1px solid #b8860b33;
+    letter-spacing: 1px;
 }
 </style>
 </head>
@@ -95,6 +114,13 @@ Python • Linux • Networking • Web Security • AI Security • OpenCV • 
 </div>
 
 <h2>Projects</h2>
+<div class="card">
+<b>👥 Smart Crowd Detection System</b><br>
+Detects and counts people in a crowd using head detection & color analysis.<br>
+Achieved 27/30 people detected — built entirely on Android phone!<br>
+<a href="https://kaggle.com/code/iamayaan/notebook4527fbf903">View on Kaggle →</a>
+</div>
+
 <div class="card">
 <b>🔥 Live Fire Detection System</b><br>
 Real-time fire detection using phone camera & Python.<br>
