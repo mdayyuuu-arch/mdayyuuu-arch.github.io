@@ -1,98 +1,543 @@
-from pathlib import Path
-
-html = """<!DOCTYPE html>
+cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Mohammed Ayaan | Cyberpunk Portfolio</title>
-<style>
-:root{
---bg:#050816;--cyan:#00F5D4;--purple:#7C3AED;--text:#fff;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:Arial,sans-serif;overflow-x:hidden}
-#loader{position:fixed;inset:0;background:#000;display:flex;justify-content:center;align-items:center;z-index:9999}
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
-.avatar{width:300px;height:300px;position:relative}
-.head{width:90px;height:90px;border:3px solid var(--cyan);border-radius:50%;margin:auto;box-shadow:0 0 25px var(--cyan)}
-.bodyx{width:170px;height:120px;border:3px solid var(--cyan);border-radius:90px 90px 20px 20px;margin:10px auto;box-shadow:0 0 25px var(--cyan)}
-.ring{position:absolute;inset:0;border:1px solid rgba(0,245,212,.4);border-radius:50%;animation:pulse 4s infinite}
-@keyframes pulse{from{transform:scale(.8)}to{transform:scale(1.6);opacity:0}}
-.typing{color:var(--cyan);margin-top:10px}
-.card{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);padding:20px;border-radius:16px;border:1px solid rgba(0,245,212,.2)}
-.skills{max-width:900px;margin:auto;padding:40px}
-.bar{height:12px;background:#222;border-radius:10px;margin:10px 0}
-.fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));width:0;animation:grow 2s forwards}
-@keyframes grow{to{width:85%}}
-.hud{position:fixed;right:20px;top:20px;border:1px solid var(--cyan);padding:10px;color:var(--cyan)}
-.timeline,.projects,.github{padding:60px 20px;max-width:1000px;margin:auto}
-.carousel{display:flex;overflow:auto;gap:15px}
-.slide{min-width:280px;height:180px;background:#111;border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center}
-canvas{position:fixed;inset:0;z-index:-1}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mohammed Ayaan — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #04020e;
+      --red: #cc1a1a;
+      --red-bright: #ff2222;
+      --red-dim: #7a0f0f;
+      --blue: #0a1560;
+      --blue-bright: #1a3aff;
+      --blue-glow: #2563eb;
+      --blue-mid: #0d1f7a;
+      --surface: rgba(4,2,18,0.82);
+      --border: #0d1540;
+      --border-bright: #1a2a80;
+      --text: #c5cfe8;
+      --text-dim: #4a5580;
+      --text-bright: #eef2ff;
+      --green: #22ff7a;
+      --orange: #ff6b35;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'Space Grotesk', sans-serif;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--text); font-family:var(--font-sans); overflow-x:hidden; }
+
+    /* ═══════════════════════════════════════════
+       LUXURY ABSTRACT BACKGROUND
+    ═══════════════════════════════════════════ */
+    #bg {
+      position:fixed; inset:0; z-index:0;
+      overflow:hidden;
+      background: radial-gradient(ellipse 120% 80% at 50% 50%, #06021a 0%, #04020e 100%);
+    }
+
+    /* Deep nebula layers */
+    .nebula {
+      position:absolute;
+      border-radius:50%;
+      filter:blur(90px);
+      mix-blend-mode:screen;
+    }
+    .n1 {
+      width:900px; height:700px;
+      background:radial-gradient(ellipse, rgba(26,58,255,0.22) 0%, rgba(10,21,96,0.1) 50%, transparent 70%);
+      top:-200px; left:-200px;
+      animation:drift1 20s ease-in-out infinite alternate;
+    }
+    .n2 {
+      width:700px; height:600px;
+      background:radial-gradient(ellipse, rgba(204,26,26,0.18) 0%, rgba(120,10,10,0.08) 50%, transparent 70%);
+      bottom:-150px; right:-100px;
+      animation:drift2 25s ease-in-out infinite alternate;
+    }
+    .n3 {
+      width:500px; height:500px;
+      background:radial-gradient(ellipse, rgba(37,99,235,0.15) 0%, transparent 65%);
+      top:40%; left:30%;
+      animation:drift3 18s ease-in-out infinite alternate;
+    }
+    .n4 {
+      width:400px; height:300px;
+      background:radial-gradient(ellipse, rgba(180,10,10,0.12) 0%, transparent 65%);
+      top:20%; right:20%;
+      animation:drift4 22s ease-in-out infinite alternate;
+    }
+    .n5 {
+      width:600px; height:400px;
+      background:radial-gradient(ellipse, rgba(10,30,140,0.14) 0%, transparent 65%);
+      bottom:10%; left:10%;
+      animation:drift1 28s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift1 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(60px,-40px) scale(1.08)} }
+    @keyframes drift2 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(-50px,60px) scale(1.1)} }
+    @keyframes drift3 { 0%{transform:translate(0,0) rotate(0deg)} 100%{transform:translate(40px,50px) rotate(15deg)} }
+    @keyframes drift4 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(-40px,-30px) scale(0.9)} }
+
+    /* Fabric/silk texture overlay */
+    .fabric {
+      position:absolute; inset:0;
+      background-image:
+        repeating-linear-gradient(45deg, rgba(26,58,255,0.025) 0px, rgba(26,58,255,0.025) 1px, transparent 1px, transparent 8px),
+        repeating-linear-gradient(-45deg, rgba(204,26,26,0.02) 0px, rgba(204,26,26,0.02) 1px, transparent 1px, transparent 8px);
+      animation:fabricShift 40s linear infinite;
+    }
+    @keyframes fabricShift { 0%{background-position:0 0,0 0} 100%{background-position:80px 80px,-80px 80px} }
+
+    /* Drifting cloud wisps */
+    .wisp {
+      position:absolute;
+      border-radius:50%;
+      filter:blur(40px);
+      opacity:0;
+      animation:wispFloat linear infinite;
+    }
+    .wisp:nth-child(1){width:200px;height:80px;background:rgba(204,26,26,0.12);top:15%;animation-duration:35s;animation-delay:0s;}
+    .wisp:nth-child(2){width:150px;height:60px;background:rgba(26,58,255,0.1);top:45%;animation-duration:28s;animation-delay:-10s;}
+    .wisp:nth-child(3){width:180px;height:70px;background:rgba(204,26,26,0.09);top:70%;animation-duration:40s;animation-delay:-20s;}
+    .wisp:nth-child(4){width:120px;height:50px;background:rgba(37,99,235,0.11);top:30%;animation-duration:32s;animation-delay:-5s;}
+
+    @keyframes wispFloat {
+      0%{opacity:0;left:-300px} 10%{opacity:1} 90%{opacity:0.6} 100%{opacity:0;left:110%}
+    }
+
+    /* Stars */
+    .stars {
+      position:absolute; inset:0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(200,210,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 10%, rgba(255,200,200,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 80%, rgba(200,210,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 55%, rgba(255,180,180,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 75%, rgba(200,220,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 50%, rgba(255,200,200,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 50% 30%, rgba(200,210,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 60%, rgba(200,210,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 10%, rgba(255,180,180,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 95% 40%, rgba(200,220,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 90%, rgba(200,210,255,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 65% 85%, rgba(255,200,200,0.7) 0%, transparent 100%);
+      animation:twinkle 6s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { 0%{opacity:0.7} 100%{opacity:1} }
+
+    /* Scanlines */
+    .scan {
+      position:absolute; inset:0;
+      background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(26,58,255,0.015) 3px,rgba(26,58,255,0.015) 4px);
+    }
+
+    /* Rising particles */
+    .particles { position:absolute; inset:0; overflow:hidden; }
+    .p { position:absolute; border-radius:50%; opacity:0; animation:rise linear infinite; }
+    @keyframes rise {
+      0%{opacity:0;transform:translateY(100vh) translateX(0)}
+      15%{opacity:0.9}
+      85%{opacity:0.4}
+      100%{opacity:0;transform:translateY(-5vh) translateX(var(--dx))}
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL ANIMATIONS
+    ═══════════════════════════════════════════ */
+    .rv    {opacity:0;transform:translateY(55px); transition:opacity .75s ease,transform .75s ease;}
+    .rv-up {opacity:0;transform:translateY(-55px);transition:opacity .75s ease,transform .75s ease;}
+    .rv-l  {opacity:0;transform:translateX(-65px);transition:opacity .75s ease,transform .75s ease;}
+    .rv-r  {opacity:0;transform:translateX(65px); transition:opacity .75s ease,transform .75s ease;}
+    .rv-s  {opacity:0;transform:scale(0.82);      transition:opacity .75s ease,transform .75s ease;}
+    .vis   {opacity:1!important;transform:none!important;}
+    .d1{transition-delay:.07s} .d2{transition-delay:.15s} .d3{transition-delay:.23s} .d4{transition-delay:.31s}
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════ */
+    nav {
+      position:fixed;top:0;left:0;right:0;z-index:200;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1rem 2rem;
+      background:rgba(4,2,14,0.9);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border);
+      box-shadow:0 1px 40px rgba(204,26,26,0.1);
+    }
+    .nav-logo{font-family:var(--font-mono);font-size:.9rem;color:var(--red-bright);letter-spacing:.1em;}
+    .nav-logo span{color:var(--text-dim);}
+    nav ul{display:flex;gap:2rem;list-style:none;}
+    nav ul a{font-family:var(--font-mono);font-size:.75rem;color:var(--text-dim);text-decoration:none;letter-spacing:.08em;transition:color .2s,text-shadow .2s;}
+    nav ul a:hover{color:var(--red-bright);text-shadow:0 0 14px rgba(255,34,34,0.7);}
+    .nav-badge{font-family:var(--font-mono);font-size:.65rem;color:var(--red-bright);border:1px solid var(--red-dim);padding:.2rem .6rem;border-radius:2px;animation:badgePulse 2s infinite;box-shadow:0 0 12px rgba(204,26,26,0.35);}
+    @keyframes badgePulse{0%,100%{box-shadow:0 0 12px rgba(204,26,26,0.35)}50%{box-shadow:0 0 24px rgba(255,34,34,0.7);opacity:.7}}
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    .hero {
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1fr auto;
+      align-items:center;
+      gap:3rem;
+      padding:6rem 2rem 4rem;
+      max-width:1100px;margin:0 auto;
+      position:relative;z-index:1;
+    }
+    .hero-left{display:flex;flex-direction:column;}
+
+    .hero-tag{font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim);letter-spacing:.2em;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;opacity:0;animation:fadeUp .8s ease .2s forwards;}
+    .hero-tag::before{content:'';width:32px;height:1px;background:var(--red-dim);}
+
+    h1{font-family:var(--font-sans);font-size:clamp(2.8rem,8vw,6rem);font-weight:700;line-height:.95;letter-spacing:-.02em;color:var(--text-bright);opacity:0;animation:fadeUp .8s ease .4s forwards;}
+    h1 .hl{color:transparent;-webkit-text-stroke:1.5px var(--red-bright);text-shadow:0 0 60px rgba(255,34,34,0.45),0 0 120px rgba(255,34,34,0.15);}
+
+    .hero-sub{font-family:var(--font-mono);font-size:clamp(.75rem,1.8vw,.9rem);color:var(--blue-glow);margin:1.4rem 0;letter-spacing:.08em;opacity:0;animation:fadeUp .8s ease .55s forwards;}
+    .hero-desc{max-width:480px;font-size:.95rem;color:var(--text-dim);line-height:1.7;margin-bottom:2rem;opacity:0;animation:fadeUp .8s ease .7s forwards;}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s ease .85s forwards;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+    /* PASSPORT PHOTO */
+    .passport-wrap{
+      opacity:0;animation:fadeUp .8s ease .6s forwards;
+      display:flex;flex-direction:column;align-items:center;gap:.75rem;
+      flex-shrink:0;
+    }
+    .passport-frame {
+      width:130px;height:170px;
+      border:2px solid var(--red-bright);
+      position:relative;overflow:hidden;
+      box-shadow:0 0 30px rgba(204,26,26,0.5),0 0 60px rgba(26,58,255,0.2),inset 0 0 20px rgba(4,2,14,0.5);
+      background:linear-gradient(135deg,rgba(10,21,96,0.4),rgba(80,5,5,0.3));
+      clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);
+    }
+    .passport-frame::before{
+      content:'';position:absolute;inset:0;
+      background:
+        linear-gradient(180deg,rgba(204,26,26,0.08) 0%,transparent 40%,transparent 60%,rgba(26,58,255,0.08) 100%);
+      z-index:2;
+    }
+    .passport-frame::after{
+      content:'PHOTO';
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--font-mono);font-size:.65rem;letter-spacing:.2em;
+      color:rgba(200,210,255,0.25);
+      z-index:1;
+    }
+    /* Replace the ::after text with actual img tag when you have photo */
+    .passport-frame img{
+      width:100%;height:100%;object-fit:cover;object-position:top;
+      position:relative;z-index:3;display:none; /* set display:block when you add photo */
+    }
+    .passport-label{font-family:var(--font-mono);font-size:.6rem;color:var(--red-dim);letter-spacing:.15em;text-align:center;}
+    .passport-corners span{position:absolute;width:10px;height:10px;border-color:var(--red-bright);border-style:solid;}
+    .passport-corners span:nth-child(1){top:0;left:0;border-width:2px 0 0 2px;}
+    .passport-corners span:nth-child(2){top:0;right:0;border-width:2px 2px 0 0;}
+    .passport-corners span:nth-child(3){bottom:0;left:0;border-width:0 0 2px 2px;}
+    .passport-corners span:nth-child(4){bottom:0;right:0;border-width:0 2px 2px 0;}
+
+    /* HERO STATS */
+    .hero-stats{display:flex;gap:2.5rem;margin-top:2rem;opacity:0;animation:fadeUp .8s ease 1s forwards;}
+    .stat-num{font-family:var(--font-mono);font-size:1.8rem;font-weight:700;color:var(--red-bright);line-height:1;text-shadow:0 0 18px rgba(255,34,34,0.5);}
+    .stat-label{font-size:.6rem;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;}
+
+    /* BUTTONS */
+    .btn-primary{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.1em;padding:.75rem 1.6rem;background:linear-gradient(135deg,var(--red),var(--red-bright));color:#fff;border:none;cursor:pointer;text-decoration:none;font-weight:700;transition:all .25s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);box-shadow:0 0 25px rgba(204,26,26,0.45);}
+    .btn-primary:hover{box-shadow:0 0 50px rgba(255,34,34,0.75);transform:translateY(-3px);}
+    .btn-secondary{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.1em;padding:.75rem 1.6rem;background:transparent;color:var(--red-bright);border:1px solid var(--red-dim);cursor:pointer;text-decoration:none;transition:all .25s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);}
+    .btn-secondary:hover{border-color:var(--red-bright);background:rgba(204,26,26,0.1);transform:translateY(-3px);box-shadow:0 0 20px rgba(204,26,26,0.3);}
+
+    /* ═══════════════════════════════════════════
+       DIVIDER
+    ═══════════════════════════════════════════ */
+    .divider{border:none;height:1px;max-width:1100px;margin:0 auto;background:linear-gradient(90deg,transparent,var(--red-dim),var(--blue-glow),var(--red-dim),transparent);}
+
+    /* ═══════════════════════════════════════════
+       SECTIONS
+    ═══════════════════════════════════════════ */
+    section{max-width:1100px;margin:0 auto;padding:5rem 2rem;position:relative;z-index:1;}
+    .sec-lbl{font-family:var(--font-mono);font-size:.7rem;color:var(--red-dim);letter-spacing:.2em;margin-bottom:.5rem;}
+    .sec-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;color:var(--text-bright);margin-bottom:3rem;letter-spacing:-.01em;}
+
+    /* ═══════════════════════════════════════════
+       SKILLS
+    ═══════════════════════════════════════════ */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;}
+    .skill-card{background:var(--surface);border:1px solid var(--border);padding:1.75rem;transition:border-color .3s,transform .3s,box-shadow .3s;position:relative;overflow:hidden;backdrop-filter:blur(10px);}
+    .skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue-glow),var(--red-bright));transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+    .skill-card:hover{border-color:var(--red-dim);transform:translateY(-5px);box-shadow:0 12px 45px rgba(204,26,26,0.18);}
+    .skill-card:hover::before{transform:scaleX(1);}
+    .skill-icon{font-size:1.5rem;margin-bottom:.75rem;}
+    .skill-name{font-size:.75rem;font-family:var(--font-mono);color:var(--text-dim);letter-spacing:.1em;margin-bottom:.5rem;}
+    .skill-pct{font-size:1.5rem;font-weight:700;color:var(--red-bright);margin-bottom:1rem;font-family:var(--font-mono);text-shadow:0 0 15px rgba(255,34,34,0.4);}
+    .bar-track{height:2px;background:var(--border);margin-bottom:1rem;}
+    .bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--blue-glow),var(--red-bright));transition:width 1.4s cubic-bezier(.4,0,.2,1);box-shadow:0 0 8px rgba(255,34,34,0.4);}
+    .bar-fill.go{width:var(--w);}
+    .skill-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+    .tag{font-family:var(--font-mono);font-size:.65rem;color:var(--text-dim);border:1px solid var(--border);padding:.2rem .5rem;letter-spacing:.05em;transition:all .2s;}
+    .tag:hover{border-color:var(--red-dim);color:var(--red-bright);background:rgba(204,26,26,0.08);}
+
+    /* ═══════════════════════════════════════════
+       PROJECTS
+    ═══════════════════════════════════════════ */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1.5rem;}
+    .project-card{background:var(--surface);border:1px solid var(--border);padding:1.75rem;transition:border-color .3s,transform .3s,box-shadow .3s;position:relative;display:flex;flex-direction:column;gap:.75rem;backdrop-filter:blur(10px);overflow:hidden;}
+    .project-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--red-bright),var(--blue-glow));transform:scaleY(0);transform-origin:top;transition:transform .4s;}
+    .project-card:hover{border-color:var(--red-dim);transform:translateY(-5px);box-shadow:0 15px 50px rgba(204,26,26,0.15);}
+    .project-card:hover::before{transform:scaleY(1);}
+    .project-header{display:flex;justify-content:space-between;align-items:flex-start;}
+    .project-num{font-family:var(--font-mono);font-size:.7rem;color:var(--border-bright);}
+    .status{font-family:var(--font-mono);font-size:.65rem;letter-spacing:.1em;padding:.2rem .6rem;border-radius:2px;}
+    .status.live{color:var(--green);border:1px solid var(--green);}
+    .status.building{color:var(--orange);border:1px solid var(--orange);}
+    .status.planned{color:var(--text-dim);border:1px solid var(--border);}
+    .status.live::before{content:'● ';}
+    .status.building::before{content:'◐ ';}
+    .status.planned::before{content:'○ ';}
+    .project-name{font-size:1rem;font-weight:600;color:var(--text-bright);letter-spacing:.02em;}
+    .project-desc{font-size:.85rem;color:var(--text-dim);line-height:1.6;flex:1;}
+    .project-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+
+    /* ═══════════════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════════════ */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+    .about-text p{color:var(--text-dim);line-height:1.8;margin-bottom:1rem;font-size:.95rem;}
+    .about-text strong{color:var(--red-bright);}
+    .terminal{background:rgba(4,2,14,0.95);border:1px solid var(--border);font-family:var(--font-mono);overflow:hidden;box-shadow:0 0 50px rgba(37,99,235,0.08),0 0 80px rgba(204,26,26,0.05);}
+    .terminal-bar{background:rgba(6,3,25,0.9);padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid var(--border);}
+    .dot{width:10px;height:10px;border-radius:50%;}
+    .dot.r{background:#ff5f57;} .dot.y{background:#ffbd2e;} .dot.g{background:#28c841;}
+    .t-title{font-size:.65rem;color:var(--text-dim);margin-left:auto;letter-spacing:.08em;}
+    .t-body{padding:1.25rem 1.5rem;font-size:.8rem;line-height:2;}
+    .prompt{color:var(--blue-glow);}
+    .cmd{color:var(--text-bright);}
+    .out{color:var(--text-dim);}
+    .out.goal{color:var(--red-bright);text-shadow:0 0 10px rgba(255,34,34,0.3);}
+    .cursor{display:inline-block;width:8px;height:14px;background:var(--red-bright);vertical-align:middle;animation:blink 1s infinite;box-shadow:0 0 8px rgba(255,34,34,0.8);}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+    /* ═══════════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════════ */
+    .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
+    .contact-card{background:var(--surface);border:1px solid var(--border);padding:1.5rem;text-decoration:none;transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column;gap:.5rem;backdrop-filter:blur(10px);}
+    .contact-card:hover{border-color:var(--red-dim);transform:translateY(-4px);box-shadow:0 10px 30px rgba(204,26,26,0.18);}
+    .c-icon{font-size:1.25rem;}
+    .c-label{font-family:var(--font-mono);font-size:.65rem;color:var(--text-dim);letter-spacing:.1em;}
+    .c-val{font-size:.85rem;color:var(--red-bright);font-weight:600;}
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer{border-top:1px solid var(--border);padding:2rem;text-align:center;font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim);letter-spacing:.1em;position:relative;z-index:1;}
+    footer span{color:var(--red-bright);text-shadow:0 0 10px rgba(255,34,34,0.4);}
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media(max-width:768px){
+      nav ul{display:none;}
+      .hero{grid-template-columns:1fr;padding-top:5rem;}
+      .passport-wrap{order:-1;align-self:center;}
+      .about-grid{grid-template-columns:1fr;}
+      h1{font-size:3rem;}
+      .hero-stats{flex-wrap:wrap;}
+    }
+  </style>
 </head>
 <body>
-<div id="loader"><h1>AYAAN.SYS LOADING...</h1></div>
-<canvas id="matrix"></canvas>
-<div class="hud">STATUS: ONLINE<br>AI BUILDER</div>
 
-<section class="hero">
-<div class="avatar">
-<div class="head"></div>
-<div class="bodyx"></div>
-<div class="ring"></div>
+<!-- ═══ LUXURY BACKGROUND ═══ -->
+<div id="bg">
+  <div class="nebula n1"></div>
+  <div class="nebula n2"></div>
+  <div class="nebula n3"></div>
+  <div class="nebula n4"></div>
+  <div class="nebula n5"></div>
+  <div class="fabric"></div>
+  <div class="stars"></div>
+  <div style="position:absolute;inset:0;overflow:hidden;">
+    <div class="wisp"></div>
+    <div class="wisp"></div>
+    <div class="wisp"></div>
+    <div class="wisp"></div>
+  </div>
+  <div class="scan"></div>
+  <div class="particles" id="pts"></div>
 </div>
-<h1>Mohammed Ayaan</h1>
-<p class="typing">AI Engineer • Robotics Innovator • Cybersecurity Researcher</p>
-</section>
 
-<section class="skills">
-<h2>Skills</h2>
-<div class="card">
-Python 85%
-<div class="bar"><div class="fill"></div></div>
-AI/ML 80%
-<div class="bar"><div class="fill" style="animation-delay:.2s"></div></div>
-Cybersecurity 75%
-<div class="bar"><div class="fill" style="animation-delay:.4s"></div></div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AYAAN<span>.SYS</span></div>
+  <ul>
+    <li><a href="#skills">SKILLS</a></li>
+    <li><a href="#projects">PROJECTS</a></li>
+    <li><a href="#about">ABOUT</a></li>
+    <li><a href="#contact">CONTACT</a></li>
+  </ul>
+  <div class="nav-badge">● AVAILABLE</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">MOHAMMED AYAAN — HYDERABAD, INDIA</p>
+    <h1>AI &amp;<br><span class="hl">BUILDER</span></h1>
+    <p class="hero-sub">// Computer Vision · Cybersecurity · Hardware · Robotics</p>
+    <p class="hero-desc">Mechanical Engineering student &amp; founder of Mech Fusion. Building AI, Robotics, and Cybersecurity tools — entirely from an Android phone.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">VIEW PROJECTS</a>
+      <a href="#contact" class="btn-secondary">CONTACT ME</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">6+</div><div class="stat-label">AI Projects</div></div>
+      <div><div class="stat-num">2nd</div><div class="stat-label">Year B.E.</div></div>
+      <div><div class="stat-num">∞</div><div class="stat-label">Ambition</div></div>
+    </div>
+  </div>
+
+  <!-- PASSPORT PHOTO -->
+  <div class="passport-wrap">
+    <div class="passport-frame">
+      <div class="passport-corners">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <!-- To add your photo: remove display:none from img and set src -->
+      <img src="your-photo.jpg" alt="Mohammed Ayaan" />
+    </div>
+    <div class="passport-label">MOHAMMED AYAAN</div>
+    <div class="passport-label" style="color:var(--blue-glow);font-size:.55rem;">AI BUILDER · HYDERABAD</div>
+  </div>
 </div>
+
+<hr class="divider"/>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="sec-lbl rv">// 01 CAPABILITIES</p>
+  <h2 class="sec-title rv">SKILLS</h2>
+  <div class="skills-grid">
+    <div class="skill-card rv d1"><div class="skill-icon">🤖</div><div class="skill-name">AI / MACHINE LEARNING</div><div class="skill-pct">80%</div><div class="bar-track"><div class="bar-fill" style="--w:80%"></div></div><div class="skill-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Kaggle</span><span class="tag">TensorFlow</span></div></div>
+    <div class="skill-card rv d2"><div class="skill-icon">🔐</div><div class="skill-name">CYBERSECURITY</div><div class="skill-pct">75%</div><div class="bar-track"><div class="bar-fill" style="--w:75%"></div></div><div class="skill-tags"><span class="tag">Ethical Hacking</span><span class="tag">CTF</span><span class="tag">Termux</span><span class="tag">Linux</span></div></div>
+    <div class="skill-card rv d3"><div class="skill-icon">⚙️</div><div class="skill-name">HARDWARE &amp; ROBOTICS</div><div class="skill-pct">70%</div><div class="bar-track"><div class="bar-fill" style="--w:70%"></div></div><div class="skill-tags"><span class="tag">Arduino</span><span class="tag">ESP32</span><span class="tag">3D Printing</span><span class="tag">CAD</span></div></div>
+    <div class="skill-card rv d4"><div class="skill-icon">💻</div><div class="skill-name">DEVELOPMENT</div><div class="skill-pct">72%</div><div class="bar-track"><div class="bar-fill" style="--w:72%"></div></div><div class="skill-tags"><span class="tag">Python</span><span class="tag">React</span><span class="tag">HTML/CSS</span><span class="tag">GitHub</span></div></div>
+  </div>
 </section>
 
-<section class="projects">
-<h2>Project Carousel</h2>
-<div class="carousel">
-<div class="slide">Fire Detection</div>
-<div class="slide">Lane Detection</div>
-<div class="slide">AyaanScan</div>
-<div class="slide">Friday AI</div>
-</div>
+<hr class="divider"/>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="sec-lbl rv-up">// 02 WORK</p>
+  <h2 class="sec-title rv-up">PROJECTS</h2>
+  <div class="projects-grid">
+    <div class="project-card rv-l d1"><div class="project-header"><span class="project-num">01</span><span class="status live">LIVE</span></div><div class="project-name">FIRE DETECTION SYSTEM</div><div class="project-desc">Real-time fire detection using computer vision. Running live from Android via Kaggle.</div><div class="project-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Kaggle</span><span class="tag">CV</span></div></div>
+    <div class="project-card rv d2"><div class="project-header"><span class="project-num">02</span><span class="status live">LIVE</span></div><div class="project-name">LANE DETECTION</div><div class="project-desc">Autonomous vehicle lane detection. Identifies lane markings in real-time using image processing.</div><div class="project-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">NumPy</span><span class="tag">AI/ML</span></div></div>
+    <div class="project-card rv-r d3"><div class="project-header"><span class="project-num">03</span><span class="status live">LIVE</span></div><div class="project-name">AYAANSCAN v3.0</div><div class="project-desc">Full pentesting toolkit on Android via Termux. Port scan, SSL, XSS/SQLi, subdomain enum.</div><div class="project-tags"><span class="tag">Python</span><span class="tag">Termux</span><span class="tag">Pentesting</span><span class="tag">Security</span></div></div>
+    <div class="project-card rv-r d1"><div class="project-header"><span class="project-num">04</span><span class="status live">LIVE</span></div><div class="project-name">GEAR FAULT DETECTION</div><div class="project-desc">ML-powered gear fault detection via vibration signal analysis. AI meets Mechanical Engineering.</div><div class="project-tags"><span class="tag">Python</span><span class="tag">Kaggle</span><span class="tag">Signal Processing</span><span class="tag">ML</span></div></div>
+    <div class="project-card rv d2"><div class="project-header"><span class="project-num">05</span><span class="status building">BUILDING</span></div><div class="project-name">CROWD DETECTION</div><div class="project-desc">AI crowd density detection for public safety monitoring. In active development.</div><div class="project-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Deep Learning</span></div></div>
+    <div class="project-card rv-l d3"><div class="project-header"><span class="project-num">06</span><span class="status live">LIVE</span></div><div class="project-name">FRIDAY AI ASSISTANT</div><div class="project-desc">Iron Man HUD AI assistant. React + Claude API + Gmail/Calendar MCP integrations.</div><div class="project-tags"><span class="tag">React</span><span class="tag">Claude API</span><span class="tag">MCP</span><span class="tag">JS</span></div></div>
+    <div class="project-card rv d4"><div class="project-header"><span class="project-num">07</span><span class="status planned">PLANNED</span></div><div class="project-name">SMART WALKING STICK</div><div class="project-desc">IoT assistive stick for visually impaired. ESP32 obstacle detection + haptic feedback. Mech Fusion startup.</div><div class="project-tags"><span class="tag">ESP32</span><span class="tag">IoT</span><span class="tag">Hardware</span><span class="tag">Startup</span></div></div>
+  </div>
 </section>
 
-<section class="timeline">
-<h2>Timeline</h2>
-<div class="card">2025 → Founded Mech Fusion</div>
+<hr class="divider"/>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="sec-lbl rv">// 03 IDENTITY</p>
+  <h2 class="sec-title rv">ABOUT</h2>
+  <div class="about-grid">
+    <div class="about-text rv-l">
+      <p>I'm a <strong>2nd-year Mechanical Engineering student</strong> at Methodist College of Engineering &amp; Technology, Hyderabad. But engineering is just the beginning.</p>
+      <p>I founded <strong>Mech Fusion</strong> — a student club for Robotics, 3D Printing, and CAD. I'm also an ethical hacker, Python developer, and AI builder who builds everything from my <strong>Android phone</strong>.</p>
+      <p>My mission: use technology to solve real problems for <strong>underserved communities</strong> — from affordable prosthetics to smart assistive devices. And build enough wealth to take care of my family.</p>
+      <p>Currently registered on <strong>Bugcrowd &amp; HackerOne</strong>, practicing CTF challenges, deploying AI models on Kaggle. Every day I'm building toward something bigger.</p>
+    </div>
+    <div class="terminal rv-r">
+      <div class="terminal-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <span class="t-title">ayaan@mech — bash</span>
+      </div>
+      <div class="t-body">
+        <div><span class="prompt">ayaan@mech:~$</span> <span class="cmd"> whoami</span></div>
+        <div class="out">Mohammed Ayaan</div>
+        <div><span class="prompt">ayaan@mech:~$</span> <span class="cmd"> cat info.txt</span></div>
+        <div class="out">Role: Student + Founder + Builder</div>
+        <div class="out">Location: Hyderabad, India</div>
+        <div class="out">College: MCET</div>
+        <div class="out">Club: Mech Fusion (Founder)</div>
+        <div><span class="prompt">ayaan@mech:~$</span> <span class="cmd"> cat goals.txt</span></div>
+        <div class="out goal">→ Build AI products</div>
+        <div class="out goal">→ Launch startup (assistive tech)</div>
+        <div class="out goal">→ Top ethical hacker in India</div>
+        <div class="out goal">→ Financial freedom for family</div>
+        <div><span class="prompt">ayaan@mech:~$</span> <span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="github">
-<h2>GitHub Stats Section</h2>
-<div class="card">Embed GitHub stats images here later.</div>
+<hr class="divider"/>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="sec-lbl rv-up">// 04 CONNECT</p>
+  <h2 class="sec-title rv-up">CONTACT</h2>
+  <div class="contact-grid">
+    <a href="https://github.com/mdayyuuu-arch" target="_blank" class="contact-card rv-s d1"><div class="c-icon">⌨️</div><div class="c-label">GITHUB</div><div class="c-val">mdayyuuu-arch</div></a>
+    <a href="https://mdayyuuu-arch.github.io" target="_blank" class="contact-card rv-s d2"><div class="c-icon">🌐</div><div class="c-label">PORTFOLIO</div><div class="c-val">mdayyuuu-arch.github.io</div></a>
+    <a href="https://linkedin.com/in/mohammed-ayaan" target="_blank" class="contact-card rv-s d3"><div class="c-icon">🔗</div><div class="c-label">LINKEDIN</div><div class="c-val">Mohammed Ayaan</div></a>
+    <a href="mailto:mdayaan0702@gmail.com" class="contact-card rv-s d4"><div class="c-icon">📧</div><div class="c-label">EMAIL</div><div class="c-val">mdayaan0702@gmail.com</div></a>
+  </div>
 </section>
+
+<footer>
+  BUILT BY <span>MOHAMMED AYAAN</span> — HYDERABAD, INDIA © 2026<br><br>
+  MECH FUSION FOUNDER · ETHICAL HACKER · AI BUILDER
+</footer>
 
 <script>
-setTimeout(()=>document.getElementById('loader').style.display='none',1800);
-const c=document.getElementById('matrix'),x=c.getContext('2d');
-c.width=innerWidth;c.height=innerHeight;
-let a=Array(120).fill(1);
-setInterval(()=>{
-x.fillStyle='rgba(5,8,22,.08)';x.fillRect(0,0,c.width,c.height);
-x.fillStyle='#00F5D4';
-a.forEach((y,i)=>{let t=String.fromCharCode(0x30A0+Math.random()*96);x.fillText(t,i*15,y);a[i]=y>c.height?0:y+15;});
-},50);
+// Particles
+const pts = document.getElementById('pts');
+for(let i=0;i<50;i++){
+  const p=document.createElement('div');
+  p.className='p';
+  const isRed = Math.random()>.5;
+  p.style.cssText=`
+    left:${Math.random()*100}%;
+    width:${Math.random()*2.5+1}px;height:${Math.random()*2.5+1}px;
+    background:${isRed?'rgba(255,34,34,0.8)':'rgba(37,99,235,0.8)'};
+    --dx:${(Math.random()-.5)*120}px;
+    animation-duration:${Math.random()*14+7}s;
+    animation-delay:-${Math.random()*18}s;
+  `;
+  pts.appendChild(p);
+}
+
+// Scroll reveal
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      e.target.querySelectorAll('.bar-fill').forEach(b=>setTimeout(()=>b.classList.add('go'),200));
+    }
+  });
+},{threshold:0.12});
+
+document.querySelectorAll('.rv,.rv-up,.rv-l,.rv-r,.rv-s').forEach(el=>io.observe(el));
+document.querySelectorAll('.skill-card').forEach(el=>io.observe(el));
 </script>
 </body>
-</html>"""
-
-path = "/mnt/data/ayaan_cyberpunk_portfolio_template.html"
-Path(path).write_text(html, encoding="utf-8")
-print(path)
+</html>
+HTMLEOF
+echo "Done"
