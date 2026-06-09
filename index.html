@@ -1,118 +1,98 @@
 from pathlib import Path
 
-html = r"""<!DOCTYPE html>
+html = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mohammed Ayaan | AI Builder</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mohammed Ayaan | Cyberpunk Portfolio</title>
 <style>
 :root{
---bg:#050816;
---primary:#00F5D4;
---secondary:#7C3AED;
---text:#eef2ff;
---muted:#94a3b8;
+--bg:#050816;--cyan:#00F5D4;--purple:#7C3AED;--text:#fff;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-font-family:Arial,sans-serif;
-background:
-radial-gradient(circle at 20% 20%, rgba(124,58,237,.25), transparent 40%),
-radial-gradient(circle at 80% 80%, rgba(0,245,212,.15), transparent 40%),
-var(--bg);
-color:var(--text);
-min-height:100vh;
-}
-.hero{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:20px;
-}
-h1{font-size:clamp(3rem,8vw,6rem)}
-.highlight{color:var(--primary);text-shadow:0 0 20px var(--primary)}
-.typing{
-margin-top:15px;
-color:var(--primary);
-border-right:2px solid var(--primary);
-white-space:nowrap;
-overflow:hidden;
-width:0;
-animation:typing 4s steps(40,end) forwards, blink .8s infinite;
-}
-@keyframes typing{from{width:0}to{width:100%}}
-@keyframes blink{50%{border-color:transparent}}
-
-.avatar-container{
-width:320px;height:320px;
-position:relative;
-display:flex;
-justify-content:center;
-align-items:center;
-margin-bottom:40px;
-}
-.head{
-width:90px;height:90px;border:3px solid var(--primary);
-border-radius:50%;
-box-shadow:0 0 20px var(--primary);
-margin:auto;
-}
-.body{
-width:160px;height:120px;margin-top:15px;
-border:3px solid var(--primary);
-border-radius:80px 80px 25px 25px;
-box-shadow:0 0 20px var(--primary);
-}
-.rings span{
-position:absolute;
-inset:0;
-border-radius:50%;
-border:1px solid rgba(0,245,212,.4);
-animation:pulse 4s infinite;
-}
-.rings span:nth-child(2){animation-delay:1.3s}
-.rings span:nth-child(3){animation-delay:2.6s}
-@keyframes pulse{
-from{transform:scale(.8);opacity:1}
-to{transform:scale(1.6);opacity:0}
-}
-.card{
-max-width:800px;
-margin:30px auto;
-padding:25px;
-background:rgba(255,255,255,.04);
-backdrop-filter:blur(10px);
-border:1px solid rgba(0,245,212,.2);
-border-radius:16px;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:Arial,sans-serif;overflow-x:hidden}
+#loader{position:fixed;inset:0;background:#000;display:flex;justify-content:center;align-items:center;z-index:9999}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.avatar{width:300px;height:300px;position:relative}
+.head{width:90px;height:90px;border:3px solid var(--cyan);border-radius:50%;margin:auto;box-shadow:0 0 25px var(--cyan)}
+.bodyx{width:170px;height:120px;border:3px solid var(--cyan);border-radius:90px 90px 20px 20px;margin:10px auto;box-shadow:0 0 25px var(--cyan)}
+.ring{position:absolute;inset:0;border:1px solid rgba(0,245,212,.4);border-radius:50%;animation:pulse 4s infinite}
+@keyframes pulse{from{transform:scale(.8)}to{transform:scale(1.6);opacity:0}}
+.typing{color:var(--cyan);margin-top:10px}
+.card{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);padding:20px;border-radius:16px;border:1px solid rgba(0,245,212,.2)}
+.skills{max-width:900px;margin:auto;padding:40px}
+.bar{height:12px;background:#222;border-radius:10px;margin:10px 0}
+.fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));width:0;animation:grow 2s forwards}
+@keyframes grow{to{width:85%}}
+.hud{position:fixed;right:20px;top:20px;border:1px solid var(--cyan);padding:10px;color:var(--cyan)}
+.timeline,.projects,.github{padding:60px 20px;max-width:1000px;margin:auto}
+.carousel{display:flex;overflow:auto;gap:15px}
+.slide{min-width:280px;height:180px;background:#111;border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center}
+canvas{position:fixed;inset:0;z-index:-1}
 </style>
 </head>
 <body>
+<div id="loader"><h1>AYAAN.SYS LOADING...</h1></div>
+<canvas id="matrix"></canvas>
+<div class="hud">STATUS: ONLINE<br>AI BUILDER</div>
+
 <section class="hero">
-<div class="avatar-container">
-<div>
+<div class="avatar">
 <div class="head"></div>
-<div class="body"></div>
+<div class="bodyx"></div>
+<div class="ring"></div>
 </div>
-<div class="rings"><span></span><span></span><span></span></div>
-</div>
+<h1>Mohammed Ayaan</h1>
+<p class="typing">AI Engineer • Robotics Innovator • Cybersecurity Researcher</p>
+</section>
 
-<h1>Mohammed <span class="highlight">Ayaan</span></h1>
-<div class="typing">AI Engineer • Robotics Innovator • Cybersecurity Researcher</div>
-
+<section class="skills">
+<h2>Skills</h2>
 <div class="card">
-<h2>About Me</h2>
-<br>
-<p>Mechanical Engineering student, founder of Mech Fusion, AI builder, robotics enthusiast, and cybersecurity learner building projects directly from Android.</p>
+Python 85%
+<div class="bar"><div class="fill"></div></div>
+AI/ML 80%
+<div class="bar"><div class="fill" style="animation-delay:.2s"></div></div>
+Cybersecurity 75%
+<div class="bar"><div class="fill" style="animation-delay:.4s"></div></div>
 </div>
 </section>
+
+<section class="projects">
+<h2>Project Carousel</h2>
+<div class="carousel">
+<div class="slide">Fire Detection</div>
+<div class="slide">Lane Detection</div>
+<div class="slide">AyaanScan</div>
+<div class="slide">Friday AI</div>
+</div>
+</section>
+
+<section class="timeline">
+<h2>Timeline</h2>
+<div class="card">2025 → Founded Mech Fusion</div>
+</section>
+
+<section class="github">
+<h2>GitHub Stats Section</h2>
+<div class="card">Embed GitHub stats images here later.</div>
+</section>
+
+<script>
+setTimeout(()=>document.getElementById('loader').style.display='none',1800);
+const c=document.getElementById('matrix'),x=c.getContext('2d');
+c.width=innerWidth;c.height=innerHeight;
+let a=Array(120).fill(1);
+setInterval(()=>{
+x.fillStyle='rgba(5,8,22,.08)';x.fillRect(0,0,c.width,c.height);
+x.fillStyle='#00F5D4';
+a.forEach((y,i)=>{let t=String.fromCharCode(0x30A0+Math.random()*96);x.fillText(t,i*15,y);a[i]=y>c.height?0:y+15;});
+},50);
+</script>
 </body>
 </html>"""
 
-path = "/mnt/data/index.html"
+path = "/mnt/data/ayaan_cyberpunk_portfolio_template.html"
 Path(path).write_text(html, encoding="utf-8")
 print(path)
