@@ -1,345 +1,546 @@
-cat > ~/mdayyuuu-arch.github.io/index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "mainEntity": {
-    "@type": "Person",
-    "name": "Mohammed Ayaan",
-    "image": "https://mdayyuuu-arch.github.io/ayaan.jpg",
-    "url": "https://mdayyuuu-arch.github.io",
-    "jobTitle": "Full Stack AI Engineer",
-    "description": "Full Stack AI Engineer and Ethical Hacker from Hyderabad, India",
-    "sameAs": [
-      "https://linkedin.com/in/mohammed-ayaan01",
-      "https://github.com/mdayyuuu-arch"
-    ]
-  }
-}
-</script>
-<meta name="google-site-verification" content="h-7YvRZ2p5ivsL-PeBObBvNZQq9A1VlcQ134wUatGKo" />
-<meta name="google-site-verification" content="D239TvJdOyUMG3AtahuSQF-PVpWgczgICoYx1ocEOJA" />
-<meta name="google-site-verification" content="D239TvJdOyUMG3AtahuSQF-PVpWgczgICoYx1ocEOJA" />
-<title>Mohammed Ayaan | Ethical Hacker & AI Builder | Hyderabad</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Mohammed Ayaan | AI Engineer & Ethical Hacker</title>
+<meta name="description" content="Full Stack AI Engineer, Ethical Hacker, Founder of Mech Fusion. Building the future from an Android phone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-:root{--g1:#00ff88;--g2:#00cc66;--dark:#010a04;--card:rgba(0,255,136,0.04);--border:rgba(0,255,136,0.15);--text:#e0fff0;--dim:#3a6a4a}
-*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
-body{background:var(--dark);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden}
-#globe-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
-.scan-line{position:fixed;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,#00ff88,transparent);animation:scan 4s linear infinite;z-index:1;opacity:0.3}
-@keyframes scan{0%{top:0}100%{top:100%}}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:16px 40px;background:rgba(1,10,4,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-logo{font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;color:var(--g1);letter-spacing:4px}
-.nav-links{display:flex;gap:24px;list-style:none}
-.nav-links a{font-family:'Share Tech Mono',monospace;font-size:0.75rem;color:var(--dim);text-decoration:none;letter-spacing:2px;transition:color 0.3s}
-.nav-links a:hover{color:var(--g1)}
-.pulse-dot{width:8px;height:8px;background:var(--g1);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px var(--g1);display:inline-block;margin-right:6px}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-.hero{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 20px 60px}
-.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1100px;width:100%}
-.hero-text{text-align:left}
-.hero-eyebrow{font-family:'Share Tech Mono',monospace;font-size:0.7rem;letter-spacing:4px;color:var(--g1);margin-bottom:24px}
-.hero-name{font-family:'Orbitron',monospace;font-size:clamp(2rem,6vw,4.5rem);font-weight:900;line-height:1;margin-bottom:16px}
-.green{color:#00ff88;text-shadow:0 0 40px #00ff88}
-.hero-role{font-family:'Share Tech Mono',monospace;font-size:0.9rem;color:var(--g2);letter-spacing:3px;margin-bottom:24px;min-height:1.4em}
-.cursor-blink{animation:blink 1s infinite;color:#00ff88}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --void:#000005;
+  --plasma:#00ffaa;
+  --plasma2:#00aaff;
+  --plasma3:#aa00ff;
+  --warn:#ffaa00;
+  --text:#e0e0e0;
+  --dim:#666;
+  --card:rgba(0,255,170,0.03);
+  --border:rgba(0,255,170,0.15);
+}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden}
+
+/* CANVAS */
+#universe{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* SCANLINE */
+.scanline{position:fixed;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--plasma),transparent);opacity:0.4;z-index:1;animation:scan 4s linear infinite;pointer-events:none}
+@keyframes scan{0%{top:-3px}100%{top:100vh}}
+
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.4;z-index:1;pointer-events:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,255,170,0.08);backdrop-filter:blur(20px);background:rgba(0,0,5,0.8)}
+.nav-logo{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;color:var(--plasma);letter-spacing:4px}
+.nav-status{display:flex;align-items:center;gap:8px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim)}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--plasma);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,255,170,0.4)}50%{opacity:0.6;box-shadow:0 0 0 8px rgba(0,255,170,0)}}
+
+/* HERO */
+.hero{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px}
+.hero-inner{max-width:900px}
+.hero-eyebrow{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--plasma);letter-spacing:6px;margin-bottom:32px;opacity:0.8}
+.hero-name{font-family:'Orbitron',monospace;font-size:clamp(42px,10vw,96px);font-weight:900;line-height:0.9;margin-bottom:24px;background:linear-gradient(135deg,#fff 0%,var(--plasma) 40%,var(--plasma2) 70%,var(--plasma3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s ease-in-out infinite}
+@keyframes shimmer{0%,100%{filter:brightness(1)}50%{filter:brightness(1.2)}}
+.hero-title{font-family:'Share Tech Mono',monospace;font-size:clamp(12px,2vw,18px);color:var(--plasma2);letter-spacing:3px;margin-bottom:40px}
+.hero-desc{font-size:16px;color:var(--dim);line-height:1.8;max-width:600px;margin:0 auto 48px}
+.hero-desc span{color:var(--text)}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{padding:14px 32px;background:transparent;border:1px solid var(--plasma);color:var(--plasma);font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;cursor:pointer;text-decoration:none;transition:all 0.3s;position:relative;overflow:hidden}
+.btn-primary::before{content:'';position:absolute;inset:0;background:var(--plasma);transform:translateX(-100%);transition:transform 0.3s;z-index:-1}
+.btn-primary:hover{color:#000;box-shadow:0 0 30px var(--plasma)}
+.btn-primary:hover::before{transform:translateX(0)}
+.btn-secondary{padding:14px 32px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--dim);font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;cursor:pointer;text-decoration:none;transition:all 0.3s}
+.btn-secondary:hover{border-color:var(--plasma2);color:var(--plasma2)}
+
+/* STATS */
+.stats{display:flex;gap:48px;justify-content:center;margin-top:64px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-family:'Orbitron',monospace;font-size:32px;font-weight:900;color:var(--plasma);display:block}
+.stat-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:2px;margin-top:4px}
+
+/* SECTIONS */
+section{position:relative;z-index:2;padding:100px 24px}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-header{margin-bottom:64px}
+.section-eyebrow{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--plasma);letter-spacing:4px;margin-bottom:12px}
+.section-title{font-family:'Orbitron',monospace;font-size:clamp(24px,4vw,40px);font-weight:700;color:#fff}
+
+/* PROJECTS GRID */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;background:var(--border)}
+.project-card{background:var(--void);padding:32px;transition:all 0.4s;position:relative;overflow:hidden;border:1px solid transparent}
+.project-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,255,170,0.05),transparent);opacity:0;transition:opacity 0.4s}
+.project-card:hover{background:rgba(0,255,170,0.03);border-color:rgba(0,255,170,0.2);transform:translateY(-4px)}
+.project-card:hover::before{opacity:1}
+.project-card.featured{grid-column:span 2;background:linear-gradient(135deg,rgba(0,255,170,0.05),rgba(0,170,255,0.03))}
+@media(max-width:768px){.project-card.featured{grid-column:span 1}}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.card-icon{font-size:28px}
+.badge{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;padding:4px 10px;border-radius:2px}
+.badge-live{background:rgba(0,255,170,0.1);color:var(--plasma);border:1px solid rgba(0,255,170,0.3)}
+.badge-build{background:rgba(255,170,0,0.1);color:var(--warn);border:1px solid rgba(255,170,0,0.3)}
+.badge-plan{background:rgba(170,0,255,0.1);color:var(--plasma3);border:1px solid rgba(170,0,255,0.3)}
+.card-title{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;color:#fff;margin-bottom:12px;letter-spacing:1px}
+.card-desc{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:20px}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.tag{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--plasma2);border:1px solid rgba(0,170,255,0.2);padding:3px 8px;letter-spacing:1px}
+.card-link{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--plasma);letter-spacing:2px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s}
+.card-link:hover{gap:16px;color:#fff}
+
+/* TERMINAL SECTION */
+.terminal-box{background:#000;border:1px solid rgba(0,255,170,0.2);padding:32px;font-family:'Share Tech Mono',monospace;max-width:700px;margin:0 auto;position:relative}
+.terminal-bar{display:flex;gap:8px;margin-bottom:24px}
+.terminal-dot{width:12px;height:12px;border-radius:50%}
+.t1{background:#ff5f57}.t2{background:#febc2e}.t3{background:#28c840}
+.terminal-line{font-size:13px;margin-bottom:8px;line-height:1.6}
+.t-prompt{color:var(--plasma)}
+.t-cmd{color:#fff}
+.t-out{color:var(--dim)}
+.t-highlight{color:var(--plasma2)}
+.cursor{display:inline-block;width:8px;height:14px;background:var(--plasma);animation:blink 1s step-end infinite;vertical-align:middle}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.hero-desc{font-size:0.95rem;color:var(--dim);line-height:1.8;margin-bottom:32px;font-weight:300}
-.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
-.btn{font-family:'Share Tech Mono',monospace;font-size:0.75rem;letter-spacing:3px;padding:12px 28px;text-decoration:none;transition:all 0.3s;display:inline-block;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
-.btn-primary{background:#00ff88;color:#010a04}.btn-primary:hover{box-shadow:0 0 30px #00ff88;transform:translateY(-2px)}
-.btn-outline{background:transparent;color:#00ff88;border:1px solid #00ff88}.btn-outline:hover{background:rgba(0,255,136,0.1)}
-.hacker-figure{position:relative;display:flex;align-items:center;justify-content:center}
-.hacker-svg-wrap{position:relative;width:320px;height:400px}
-.hacker-svg-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,255,136,0.15) 0%,transparent 70%);animation:breathe 3s ease-in-out infinite}
-@keyframes breathe{0%,100%{opacity:0.5}50%{opacity:1}}
-.hacker-ring{position:absolute;border:1px solid rgba(0,255,136,0.2);border-radius:50%;animation:rotate-ring 8s linear infinite}
-.hacker-ring:nth-child(1){width:350px;height:350px;top:50%;left:50%;transform:translate(-50%,-50%)}
-.hacker-ring:nth-child(2){width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%);animation-direction:reverse;animation-duration:6s}
-.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
-.stat-item{background:var(--dark);padding:28px 20px;text-align:center}
-.stat-num{font-family:'Orbitron',monospace;font-size:2rem;font-weight:700;color:#00ff88;text-shadow:0 0 20px #00ff88;display:block}
-.stat-label{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--dim);letter-spacing:3px;margin-top:6px;display:block}
-.section{position:relative;z-index:2;padding:80px 40px;max-width:1200px;margin:0 auto}
-.section-tag{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:#00ff88;letter-spacing:5px;opacity:0.6;margin-bottom:8px}
-.section-title{font-family:'Orbitron',monospace;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;margin-bottom:48px;position:relative;display:inline-block}
-.section-title::after{content:'';position:absolute;bottom:-10px;left:0;width:50px;height:3px;background:#00ff88;box-shadow:0 0 10px #00ff88}
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
-.project-card{background:var(--card);border:1px solid var(--border);padding:28px;transition:all 0.3s}
-.project-card:hover{border-color:#00ff88;transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,255,136,0.1)}
-.project-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
-.project-icon{font-size:1.8rem}
-.project-badge{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:2px;padding:4px 10px;border:1px solid}
-.badge-live{color:#00ff88;border-color:#00ff88;background:rgba(0,255,136,0.08)}
-.badge-build{color:#00e5ff;border-color:#00e5ff;background:rgba(0,229,255,0.08)}
-.badge-plan{color:var(--dim);border-color:var(--dim)}
-.project-title{font-family:'Orbitron',monospace;font-size:0.95rem;font-weight:700;margin-bottom:10px}
-.project-desc{font-size:0.88rem;color:rgba(224,255,240,0.5);line-height:1.7;margin-bottom:16px;font-weight:300}
-.project-tech{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.ptag{font-family:'Share Tech Mono',monospace;font-size:0.6rem;background:rgba(0,255,136,0.06);color:#00cc66;padding:3px 8px;border:1px solid rgba(0,255,136,0.1)}
-.project-link{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:#00ff88;text-decoration:none;letter-spacing:2px;border-bottom:1px solid rgba(0,255,136,0.3);padding-bottom:2px}
-.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.cert-card{background:var(--card);border:1px solid var(--border);padding:24px;transition:all 0.3s;display:flex;align-items:flex-start;gap:16px}
-.cert-card:hover{border-color:#00ff88;box-shadow:0 0 20px rgba(0,255,136,0.08)}
-.cert-icon{font-size:1.8rem;flex-shrink:0}
-.cert-title{font-family:'Orbitron',monospace;font-size:0.75rem;color:#00ff88;letter-spacing:1px;margin-bottom:4px}
-.cert-issuer{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--dim);letter-spacing:1px}
-.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-.link-card{background:var(--card);border:1px solid var(--border);padding:18px 20px;text-decoration:none;transition:all 0.3s;display:flex;align-items:center;gap:14px}
-.link-card:hover{border-color:#00ff88;background:rgba(0,255,136,0.06);transform:translateX(4px)}
-.link-icon{font-size:1.4rem;flex-shrink:0}
-.link-info{flex:1}
-.link-label{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--dim);letter-spacing:2px;display:block}
-.link-val{font-family:'Orbitron',monospace;font-size:0.78rem;color:#00ff88;display:block;margin-top:2px}
-.link-arrow{color:var(--dim);font-size:0.8rem}
-.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent);position:relative;z-index:2}
-footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(1,10,4,0.8)}
-.footer-left{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--dim);letter-spacing:2px}
-.footer-left span{color:#00ff88}
-@media(max-width:768px){nav{padding:12px 16px}.nav-links{display:none}.hero-inner{grid-template-columns:1fr;text-align:center}.hacker-svg-wrap{width:220px;height:280px}.hero-btns{justify-content:center}.section{padding:60px 16px}.stats-bar{grid-template-columns:repeat(2,1fr)}footer{flex-direction:column;gap:12px;text-align:center}}
+
+/* CERTS */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.cert-card{padding:20px 24px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;gap:16px;transition:all 0.3s}
+.cert-card:hover{border-color:rgba(0,255,170,0.3);transform:translateX(4px)}
+.cert-icon{font-size:24px;flex-shrink:0}
+.cert-name{font-family:'Share Tech Mono',monospace;font-size:11px;color:#fff;margin-bottom:4px;letter-spacing:1px}
+.cert-org{font-size:11px;color:var(--dim)}
+
+/* LINKS */
+.links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.link-card{padding:16px 20px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;gap:16px;text-decoration:none;transition:all 0.3s;cursor:pointer}
+.link-card:hover{border-color:var(--plasma);background:rgba(0,255,170,0.05)}
+.link-card:hover .link-arrow{transform:translateX(8px);color:var(--plasma)}
+.link-icon{font-size:20px;flex-shrink:0}
+.link-label{font-family:'Share Tech Mono',monospace;font-size:11px;color:#fff;letter-spacing:1px}
+.link-val{font-size:11px;color:var(--dim);margin-top:2px}
+.link-arrow{margin-left:auto;color:var(--dim);transition:all 0.3s;font-family:'Share Tech Mono',monospace}
+
+/* CONTACT */
+.contact-box{max-width:600px;text-align:center;margin:0 auto}
+.contact-email{font-family:'Orbitron',monospace;font-size:clamp(16px,3vw,28px);color:var(--plasma);margin:32px 0;word-break:break-all}
+.contact-social{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.social-link{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:2px;padding:8px 16px;border:1px solid var(--border);transition:all 0.3s}
+.social-link:hover{color:var(--plasma);border-color:var(--plasma)}
+
+/* FOOTER */
+footer{position:relative;z-index:2;text-align:center;padding:40px 24px;border-top:1px solid var(--border)}
+.footer-text{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:3px}
+.footer-text span{color:var(--plasma)}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:16px;margin-bottom:48px}
+.divider-line{flex:1;height:1px;background:var(--border)}
+.divider-text{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:3px;white-space:nowrap}
+
+/* GLOW EFFECTS */
+.glow-plasma{text-shadow:0 0 20px var(--plasma)}
+.glow-box{box-shadow:0 0 40px rgba(0,255,170,0.05),inset 0 0 40px rgba(0,255,170,0.02)}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:600px){
+  nav{padding:12px 16px}
+  section{padding:60px 16px}
+  .stats{gap:32px}
+  .hero-btns{flex-direction:column;align-items:center}
+}
 </style>
 </head>
 <body>
-<canvas id="globe-bg"></canvas>
-<div class="scan-line"></div>
+
+<canvas id="universe"></canvas>
+<div class="scanline"></div>
+
 <nav>
-  <div class="nav-logo">AYU.SYS</div>
-  <ul class="nav-links">
-    <li><a href="#projects">PROJECTS</a></li>
-    <li><a href="#certs">CERTS</a></li>
-    <li><a href="#links">LINKS</a></li>
-    <li><a href="#contact">CONTACT</a></li>
-  </ul>
-  <div style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:#00ff88"><div class="pulse-dot"></div>ONLINE</div>
+  <div class="nav-logo">AYAAN.SYS</div>
+  <div class="nav-status">
+    <div class="pulse"></div>
+    <span>ONLINE // MCET HYD</span>
+  </div>
 </nav>
+
+<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-text">
-      <div class="hero-eyebrow">// MCET HYDERABAD · AI BUILDER · ETHICAL HACKER</div>
-      <h1 class="hero-name">MOHAMMED<br><span class="green">AYAAN</span></h1>
-      <div class="hero-role" id="tw"><span class="cursor-blink">█</span></div>
-      <p class="hero-desc">2nd year ME student at MCET Hyderabad. Building AI tools, hunting bugs, creating assistive tech — all from an Android phone.</p>
-      <div class="hero-btns">
-        <a href="#projects" class="btn btn-primary">VIEW PROJECTS</a>
-        <a href="#links" class="btn btn-outline">ALL LINKS</a>
-      </div>
+    <div class="hero-eyebrow">MOHAMMED AYAAN // FULL STACK AI ENGINEER</div>
+    <h1 class="hero-name">AYAAN</h1>
+    <div class="hero-title">ETHICAL HACKER · AI BUILDER · MECH FUSION FOUNDER</div>
+    <p class="hero-desc">
+      2nd year ME student at <span>MCET Hyderabad</span>. Building AI tools, hunting bugs, 
+      creating assistive tech — <span>all from an Android phone.</span>
+      No laptop. No excuses. Just code.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">VIEW PROJECTS</a>
+      <a href="#links" class="btn-secondary">ALL LINKS</a>
     </div>
-    <div class="hacker-figure">
-      <div class="hacker-svg-wrap">
-        <div class="hacker-ring"></div>
-        <div class="hacker-ring"></div>
-        <svg viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-          <defs>
-            <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.3"/>
-              <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0"/>
-            </radialGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <!-- Glow bg -->
-          <ellipse cx="160" cy="220" rx="120" ry="160" fill="url(#glowGrad)" opacity="0.4"/>
-          <!-- Hood/cloak -->
-          <path d="M80,120 Q160,60 240,120 L260,380 Q160,400 60,380 Z" fill="#010a04" stroke="#00ff88" stroke-width="1.5" opacity="0.9" filter="url(#glow)"/>
-          <!-- Hood top -->
-          <path d="M80,120 Q160,40 240,120 Q200,80 160,75 Q120,80 80,120Z" fill="#011a0a" stroke="#00ff88" stroke-width="1" opacity="0.95"/>
-          <!-- Face shadow area -->
-          <ellipse cx="160" cy="175" rx="55" ry="60" fill="#000d06" stroke="#00ff8820" stroke-width="1"/>
-          <!-- Guy Fawkes mask -->
-          <!-- Forehead -->
-          <path d="M115,145 Q160,130 205,145 L208,185 Q160,195 112,185 Z" fill="#1a1a1a" stroke="#00ff88" stroke-width="0.8" filter="url(#glow)"/>
-          <!-- Cheeks -->
-          <path d="M112,185 Q105,210 110,230 Q160,245 210,230 Q215,210 208,185 Q160,195 112,185Z" fill="#151515" stroke="#00ff88" stroke-width="0.8"/>
-          <!-- Nose -->
-          <path d="M152,185 L148,210 Q160,215 172,210 L168,185Z" fill="#111" stroke="#00ff8860" stroke-width="0.5"/>
-          <!-- Moustache left -->
-          <path d="M125,220 Q140,215 155,222 Q140,230 125,225Z" fill="#00ff88" opacity="0.8"/>
-          <!-- Moustache right -->
-          <path d="M165,222 Q180,215 195,220 Q195,225 165,230Z" fill="#00ff88" opacity="0.8"/>
-          <!-- Chin beard -->
-          <path d="M148,230 Q160,250 172,230 Q160,235 148,230Z" fill="#00ff88" opacity="0.6"/>
-          <!-- Eyes - left -->
-          <ellipse cx="138" cy="168" rx="14" ry="10" fill="#000" stroke="#00ff88" stroke-width="1" filter="url(#glow)"/>
-          <ellipse cx="138" cy="168" rx="6" ry="6" fill="#00ff88" opacity="0.9"/>
-          <ellipse cx="138" cy="168" rx="3" ry="3" fill="#fff" opacity="0.8"/>
-          <!-- Eyes - right -->
-          <ellipse cx="182" cy="168" rx="14" ry="10" fill="#000" stroke="#00ff88" stroke-width="1" filter="url(#glow)"/>
-          <ellipse cx="182" cy="168" rx="6" ry="6" fill="#00ff88" opacity="0.9"/>
-          <ellipse cx="182" cy="168" rx="3" ry="3" fill="#fff" opacity="0.8"/>
-          <!-- Eyebrows -->
-          <path d="M124,158 Q138,152 152,157" stroke="#00ff88" stroke-width="1.5" fill="none" opacity="0.7"/>
-          <path d="M168,157 Q182,152 196,158" stroke="#00ff88" stroke-width="1.5" fill="none" opacity="0.7"/>
-          <!-- Smile lines -->
-          <path d="M118,200 Q125,205 118,215" stroke="#00ff8840" stroke-width="1" fill="none"/>
-          <path d="M202,200 Q195,205 202,215" stroke="#00ff8840" stroke-width="1" fill="none"/>
-          <!-- Cloak details -->
-          <path d="M100,160 Q80,200 75,300" stroke="#00ff8830" stroke-width="1" fill="none"/>
-          <path d="M220,160 Q240,200 245,300" stroke="#00ff8830" stroke-width="1" fill="none"/>
-          <!-- Collar -->
-          <path d="M110,240 Q160,260 210,240 L220,270 Q160,290 100,270Z" fill="#011a0a" stroke="#00ff88" stroke-width="1" opacity="0.8"/>
-          <!-- Glowing orb in hand -->
-          <circle cx="160" cy="340" r="20" fill="#00ff8815" stroke="#00ff88" stroke-width="1" filter="url(#glow)"/>
-          <circle cx="160" cy="340" r="10" fill="#00ff8830" filter="url(#glow)"/>
-          <circle cx="160" cy="340" r="4" fill="#00ff88" opacity="0.9"/>
-          <!-- Hands holding orb -->
-          <path d="M120,320 Q140,330 140,345 Q150,355 160,355" stroke="#00ff8860" stroke-width="8" fill="none" stroke-linecap="round"/>
-          <path d="M200,320 Q180,330 180,345 Q170,355 160,355" stroke="#00ff8860" stroke-width="8" fill="none" stroke-linecap="round"/>
-          <!-- Scan lines on figure -->
-          <line x1="90" y1="280" x2="230" y2="280" stroke="#00ff8808" stroke-width="1"/>
-          <line x1="90" y1="300" x2="230" y2="300" stroke="#00ff8808" stroke-width="1"/>
-          <line x1="90" y1="320" x2="230" y2="320" stroke="#00ff8808" stroke-width="1"/>
-        </svg>
+    <div class="stats">
+      <div class="stat"><span class="stat-num" data-count="9">0</span><span class="stat-label">PROJECTS</span></div>
+      <div class="stat"><span class="stat-num">2nd</span><span class="stat-label">YEAR MCET</span></div>
+      <div class="stat"><span class="stat-num" data-count="7">0</span><span class="stat-label">CERTIFICATES</span></div>
+      <div class="stat"><span class="stat-num">∞</span><span class="stat-label">AMBITION</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">// 01 — PROJECTS</div>
+      <h2 class="section-title">WHAT I'VE BUILT</h2>
+    </div>
+    <div class="projects-grid reveal">
+
+      <div class="project-card featured">
+        <div class="card-top"><div class="card-icon">🖥️</div><span class="badge badge-live">● LIVE</span></div>
+        <div class="card-title">AYAAN OS</div>
+        <p class="card-desc">Full-stack AI hacker dashboard. AI Roaster, Recon Engine, Money Tracker & Meme Forge — 4 powerful modules in one app. Built entirely from Android phone using Termux. Powered by Groq LLaMA 3.3 70B.</p>
+        <div class="card-tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Groq AI</span><span class="tag">Render</span><span class="tag">Termux</span></div>
+        <a href="https://ayaan-os.onrender.com" class="card-link" target="_blank">VIEW LIVE →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top"><div class="card-icon">🛡️</div><span class="badge badge-live">● LIVE</span></div>
+        <div class="card-title">NETGUARD AI</div>
+        <p class="card-desc">ML-powered network security dashboard. Real-time packet capture via tshark, anomaly detection, live traffic monitoring.</p>
+        <div class="card-tags"><span class="tag">Python</span><span class="tag">ML</span><span class="tag">tshark</span><span class="tag">Termux</span></div>
+        <a href="https://mdayyuuu-arch.github.io/netguard-ai" class="card-link" target="_blank">VIEW LIVE →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top"><div class="card-icon">🔐</div><span class="badge badge-live">● LIVE</span></div>
+        <div class="card-title">AYAANKIT PRO</div>
+        <p class="card-desc">Full SaaS pentesting toolkit. Port scanner, vulnerability checker, DNS/SSL tools, subdomain finder, PDF report generator.</p>
+        <div class="card-tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SaaS</span><span class="tag">Render</span></div>
+        <a href="https://ayaankit-pro.onrender.com" class="card-link" target="_blank">VIEW LIVE →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top"><div class="card-icon">🤖</div><span class="badge badge-live">● LIVE</span></div>
+        <div class="card-title">FRIDAY AI ASSISTANT</div>
+        <p class="card-desc">Iron Man inspired AI assistant. React + Claude API with Gmail & Calendar integration. HUD interface with voice support.</p>
+        <div class="card-tags"><span class="tag">React</span><span class="tag">Claude API</span><span class="tag">MCP</span><span class="tag">JS</span></div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top"><div class="card-icon">💰</div><span class="badge badge-live">● LIVE</span></div>
+        <div class="card-title">UDHAARI TRACKER</div>
+        <p class="card-desc">Friend debt tracker with WhatsApp reminder automation. JSON ledger, copy-paste reminders, pending amount tracker.</p>
+        <div class="card-tags"><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">CLI</span></div>
+        <a href="https://github.com/mdayyuuu-arch/udhaari-tracker" class="card-link" target="_blank">VIEW GITHUB →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top"><div class="card-icon">🔥</div><span class="badge badge-live">● LIVE</span></div>
+        <div class="card-title">FIRE DETECTION</div>
+        <p class="card-desc">Real-time fire detection using computer vision. Deployed on Kaggle from Android. ML model for video stream analysis.</p>
+        <div class="card-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Kaggle</span><span class="tag">CV</span></div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top"><div class="card-icon">🛣️</div><span class="badge badge-live">● LIVE</span></div>
+        <div class="card-title">LANE DETECTION</div>
+        <p class="card-desc">Autonomous vehicle lane detection. Real-time road footage processing to identify lane markings using image processing.</p>
+        <div class="card-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">NumPy</span><span class="tag">AI</span></div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top"><div class="card-icon">👥</div><span class="badge badge-build">◐ BUILDING</span></div>
+        <div class="card-title">CROWD DETECTION</div>
+        <p class="card-desc">AI-powered crowd density detection for public safety. Deep learning model for real-time crowd level monitoring.</p>
+        <div class="card-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Deep Learning</span></div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top"><div class="card-icon">🦯</div><span class="badge badge-plan">○ STARTUP</span></div>
+        <div class="card-title">SMART WALKING STICK</div>
+        <p class="card-desc">IoT assistive walking stick for visually impaired. ESP32 obstacle detection with haptic feedback for rural India.</p>
+        <div class="card-tags"><span class="tag">ESP32</span><span class="tag">IoT</span><span class="tag">Arduino</span><span class="tag">Hardware</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TERMINAL -->
+<section style="padding:60px 24px">
+  <div class="section-inner">
+    <div class="terminal-box glow-box reveal">
+      <div class="terminal-bar">
+        <div class="terminal-dot t1"></div>
+        <div class="terminal-dot t2"></div>
+        <div class="terminal-dot t3"></div>
+      </div>
+      <div class="terminal-line"><span class="t-prompt">ayaan@mcet:~$ </span><span class="t-cmd">whoami</span></div>
+      <div class="terminal-line"><span class="t-out">Mohammed Ayaan — Full Stack AI Engineer & Ethical Hacker</span></div>
+      <div class="terminal-line"><span class="t-prompt">ayaan@mcet:~$ </span><span class="t-cmd">cat skills.txt</span></div>
+      <div class="terminal-line"><span class="t-highlight">React · Node.js · Python · Flask · Groq AI · Claude API</span></div>
+      <div class="terminal-line"><span class="t-highlight">Nmap · SQLMap · Burp Suite · OSINT · Bug Bounty</span></div>
+      <div class="terminal-line"><span class="t-highlight">TryHackMe Top 4% · HackerOne · Bugcrowd</span></div>
+      <div class="terminal-line"><span class="t-prompt">ayaan@mcet:~$ </span><span class="t-cmd">cat setup.txt</span></div>
+      <div class="terminal-line"><span class="t-out">Device: Android Phone · IDE: Termux · Hosting: Render + GitHub Pages</span></div>
+      <div class="terminal-line"><span class="t-prompt">ayaan@mcet:~$ </span><span class="t-cmd">echo $MOTTO</span></div>
+      <div class="terminal-line"><span class="t-highlight">"No laptop. No excuses. Just build."</span></div>
+      <div class="terminal-line"><span class="t-prompt">ayaan@mcet:~$ </span><span class="cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certs">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">// 02 — CREDENTIALS</div>
+      <h2 class="section-title">CERTIFICATES</h2>
+    </div>
+    <div class="certs-grid reveal">
+      <div class="cert-card"><div class="cert-icon">🎓</div><div><div class="cert-name">NPTEL — ETHICS IN ENGINEERING</div><div class="cert-org">NPTEL · IIT · 2026</div></div></div>
+      <div class="cert-card"><div class="cert-icon">☁️</div><div><div class="cert-name">AWS CLOUD DEVELOPMENT</div><div class="cert-org">Amazon Web Services · 2026</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🐍</div><div><div class="cert-name">PYTHON PROGRAMMING</div><div class="cert-org">Amazon Web Services · 2026</div></div></div>
+      <div class="cert-card"><div class="cert-icon">📊</div><div><div class="cert-name">TATA DATA VISUALISATION</div><div class="cert-org">Forage · Tata Group · 2026</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🤖</div><div><div class="cert-name">TATA iQ GenAI</div><div class="cert-org">Forage · Tata iQ · 2026</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🏭</div><div><div class="cert-name">CNC PROGRAMMING</div><div class="cert-org">MCET Hyderabad · 2025</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🎓</div><div><div class="cert-name">GITHUB STUDENT PACK</div><div class="cert-org">GitHub Education · 2026</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LINKS -->
+<section id="links">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">// 03 — PROFILES</div>
+      <h2 class="section-title">ALL LINKS</h2>
+    </div>
+    <div class="links-grid reveal">
+      <a href="https://github.com/mdayyuuu-arch" class="link-card" target="_blank"><div class="link-icon">⌨️</div><div><div class="link-label">GITHUB</div><div class="link-val">mdayyuuu-arch</div></div><span class="link-arrow">→</span></a>
+      <a href="https://linkedin.com/in/mohammed-ayaan01" class="link-card" target="_blank"><div class="link-icon">🔗</div><div><div class="link-label">LINKEDIN</div><div class="link-val">Mohammed Ayaan</div></div><span class="link-arrow">→</span></a>
+      <a href="https://tryhackme.com/p/pvt1iamayaan" class="link-card" target="_blank"><div class="link-icon">🏴</div><div><div class="link-label">TRYHACKME</div><div class="link-val">Top 4% Global</div></div><span class="link-arrow">→</span></a>
+      <a href="https://bugcrowd.com" class="link-card" target="_blank"><div class="link-icon">🐛</div><div><div class="link-label">BUGCROWD</div><div class="link-val">Mohammed Ayaan</div></div><span class="link-arrow">→</span></a>
+      <a href="https://hackerone.com" class="link-card" target="_blank"><div class="link-icon">🔓</div><div><div class="link-label">HACKERONE</div><div class="link-val">Mohammed Ayaan</div></div><span class="link-arrow">→</span></a>
+      <a href="https://fiverr.com/nomeanno" class="link-card" target="_blank"><div class="link-icon">💼</div><div><div class="link-label">FIVERR</div><div class="link-val">nomeanno</div></div><span class="link-arrow">→</span></a>
+      <a href="https://ayaan-os.onrender.com" class="link-card" target="_blank"><div class="link-icon">🖥️</div><div><div class="link-label">AYAAN OS</div><div class="link-val">AI Hacker Dashboard</div></div><span class="link-arrow">→</span></a>
+      <a href="https://ayaankit-pro.onrender.com" class="link-card" target="_blank"><div class="link-icon">🔐</div><div><div class="link-label">AYAANKIT PRO</div><div class="link-val">Live Tool</div></div><span class="link-arrow">→</span></a>
+      <a href="https://mdayyuuu-arch.github.io/netguard-ai" class="link-card" target="_blank"><div class="link-icon">🛡️</div><div><div class="link-label">NETGUARD AI</div><div class="link-val">Live Dashboard</div></div><span class="link-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-header reveal" style="text-align:center;margin-bottom:32px">
+      <div class="section-eyebrow">// 04 — CONNECT</div>
+      <h2 class="section-title">LET'S BUILD</h2>
+    </div>
+    <div class="contact-box reveal">
+      <p style="color:var(--dim);font-size:14px;line-height:1.8">Open for collaborations, bug bounty partnerships, freelance projects, and conversations about building the future.</p>
+      <div class="contact-email">mdayaan0702@gmail.com</div>
+      <div class="contact-social">
+        <a href="https://linkedin.com/in/mohammed-ayaan01" class="social-link" target="_blank">LINKEDIN</a>
+        <a href="https://github.com/mdayyuuu-arch" class="social-link" target="_blank">GITHUB</a>
+        <a href="https://fiverr.com/nomeanno" class="social-link" target="_blank">FIVERR</a>
       </div>
     </div>
   </div>
 </section>
-<div class="stats-bar">
-  <div class="stat-item"><span class="stat-num">8+</span><span class="stat-label">PROJECTS</span></div>
-  <div class="stat-item"><span class="stat-num">2nd</span><span class="stat-label">YEAR MCET</span></div>
-  <div class="stat-item"><span class="stat-num">7+</span><span class="stat-label">CERTIFICATES</span></div>
-  <div class="stat-item"><span class="stat-num">∞</span><span class="stat-label">AMBITION</span></div>
-</div>
-<div class="divider"></div>
-<div class="section" id="projects">
-  <div class="section-tag">// 01 — PROJECTS</div>
-  <h2 class="section-title">PROJECTS</h2>
-  <div class="projects-grid">
-    <div class="project-card"><div class="project-header"><div class="project-icon">🛡️</div><div class="project-badge badge-live">● LIVE</div></div><div class="project-title">NETGUARD AI</div><p class="project-desc">ML-powered network security dashboard. Real-time packet capture via tshark, anomaly detection, live traffic monitoring.</p><div class="project-tech"><span class="ptag">Python</span><span class="ptag">ML</span><span class="ptag">tshark</span><span class="ptag">Termux</span></div><a href="https://mdayyuuu-arch.github.io/netguard-ai" class="project-link" target="_blank">VIEW LIVE →</a></div>
-    <div class="project-card"><div class="project-header"><div class="project-icon">🔐</div><div class="project-badge badge-live">● LIVE</div></div><div class="project-title">AYAANKIT PRO</div><p class="project-desc">Full SaaS pentesting toolkit. Port scanner, vulnerability checker, DNS/SSL tools, subdomain finder, PDF report generator.</p><div class="project-tech"><span class="ptag">Python</span><span class="ptag">Flask</span><span class="ptag">SaaS</span><span class="ptag">Render</span></div><a href="https://ayaankit-pro.onrender.com" class="project-link" target="_blank">VIEW LIVE →</a></div>
-    <div class="project-card"><div class="project-header"><div class="project-icon">🤖</div><div class="project-badge badge-live">● LIVE</div></div><div class="project-title">FRIDAY AI ASSISTANT</div><p class="project-desc">Iron Man inspired AI assistant. React + Claude API with Gmail & Calendar integration. HUD interface with voice support.</p><div class="project-tech"><span class="ptag">React</span><span class="ptag">Claude API</span><span class="ptag">MCP</span><span class="ptag">JS</span></div></div>
-    <div class="project-card"><div class="project-header"><div class="project-icon">💰</div><div class="project-badge badge-live">● LIVE</div></div><div class="project-title">UDHAARI TRACKER</div><p class="project-desc">Friend debt tracker with WhatsApp reminder automation. JSON ledger, copy-paste reminders, pending amount tracker.</p><div class="project-tech"><span class="ptag">Python</span><span class="ptag">Automation</span><span class="ptag">CLI</span></div><a href="https://github.com/mdayyuuu-arch/udhaari-tracker" class="project-link" target="_blank">VIEW GITHUB →</a>
 
-<div class="project-card">
-<div class="project-icon">🖥️</div>
-<div class="project-status live">● LIVE</div>
-</div></div>
-    <div class="project-card"><div class="project-header"><div class="project-icon">🔥</div><div class="project-badge badge-live">● LIVE</div></div><div class="project-title">FIRE DETECTION</div><p class="project-desc">Real-time fire detection using computer vision. Deployed on Kaggle from Android. ML model for video stream analysis.</p><div class="project-tech"><span class="ptag">Python</span><span class="ptag">OpenCV</span><span class="ptag">Kaggle</span><span class="ptag">CV</span></div></div>
-    <div class="project-card"><div class="project-header"><div class="project-icon">🛣️</div><div class="project-badge badge-live">● LIVE</div></div><div class="project-title">LANE DETECTION</div><p class="project-desc">Autonomous vehicle lane detection. Real-time road footage processing to identify lane markings using image processing.</p><div class="project-tech"><span class="ptag">Python</span><span class="ptag">OpenCV</span><span class="ptag">NumPy</span><span class="ptag">AI</span></div></div>
-    <div class="project-card"><div class="project-header"><div class="project-icon">👥</div><div class="project-badge badge-build">◐ BUILDING</div></div><div class="project-title">CROWD DETECTION</div><p class="project-desc">AI-powered crowd density detection for public safety. Deep learning model for real-time crowd level monitoring.</p><div class="project-tech"><span class="ptag">Python</span><span class="ptag">OpenCV</span><span class="ptag">Deep Learning</span></div></div>
-    <div class="project-card"><div class="project-header"><div class="project-icon">🦯</div><div class="project-badge badge-plan">○ STARTUP</div></div><div class="project-title">SMART WALKING STICK</div><p class="project-desc">IoT assistive walking stick for visually impaired. ESP32 obstacle detection with haptic feedback for rural India.</p><div class="project-tech"><span class="ptag">ESP32</span><span class="ptag">IoT</span><span class="ptag">Arduino</span><span class="ptag">Hardware</span></div></div>
-  </div>
-</div>
-<div class="divider"></div>
-<div class="section" id="certs">
-  <div class="section-tag">// 02 — CREDENTIALS</div>
-  <h2 class="section-title">CERTIFICATES</h2>
-  <div class="certs-grid">
-    <div class="cert-card"><div class="cert-icon">🎓</div><div><div class="cert-title">NPTEL — ETHICS IN ENGINEERING</div><div class="cert-issuer">NPTEL · IIT · 2026</div></div></div>
-    <div class="cert-card"><div class="cert-icon">☁️</div><div><div class="cert-title">AWS CLOUD DEVELOPMENT</div><div class="cert-issuer">Amazon Web Services · 2026</div></div></div>
-    <div class="cert-card"><div class="cert-icon">🐍</div><div><div class="cert-title">PYTHON PROGRAMMING</div><div class="cert-issuer">Amazon Web Services · 2026</div></div></div>
-    <div class="cert-card"><div class="cert-icon">📊</div><div><div class="cert-title">TATA DATA VISUALISATION</div><div class="cert-issuer">Forage · Tata Group · 2026</div></div></div>
-    <div class="cert-card"><div class="cert-icon">🤖</div><div><div class="cert-title">TATA iQ GenAI</div><div class="cert-issuer">Forage · Tata iQ · 2026</div></div></div>
-    <div class="cert-card"><div class="cert-icon">🏭</div><div><div class="cert-title">CNC PROGRAMMING</div><div class="cert-issuer">MCET Hyderabad · 2025</div></div></div>
-    <div class="cert-card"><div class="cert-icon">🎓</div><div><div class="cert-title">GITHUB STUDENT PACK</div><div class="cert-issuer">GitHub Education · 2026</div></div></div>
-  </div>
-</div>
-<div class="divider"></div>
-<div class="section" id="links">
-  <div class="section-tag">// 03 — PROFILES</div>
-  <h2 class="section-title">ALL LINKS</h2>
-  <div class="links-grid">
-    <a href="https://github.com/mdayyuuu-arch" class="link-card" target="_blank"><div class="link-icon">⌨️</div><div class="link-info"><span class="link-label">GITHUB</span><span class="link-val">mdayyuuu-arch</span></div><span class="link-arrow">→</span></a>
-    <a href="https://www.linkedin.com/in/mohammed-ayaan01" class="link-card" target="_blank"><div class="link-icon">🔗</div><div class="link-info"><span class="link-label">LINKEDIN</span><span class="link-val">Mohammed Ayaan</span></div><span class="link-arrow">→</span></a>
-    <a href="https://tryhackme.com/p/pvt1iamayaan" class="link-card" target="_blank"><div class="link-icon">🏴</div><div class="link-info"><span class="link-label">TRYHACKME</span><span class="link-val">pvt1iamayaan</span></div><span class="link-arrow">→</span></a>
-    <a href="https://bugcrowd.com" class="link-card" target="_blank"><div class="link-icon">🐛</div><div class="link-info"><span class="link-label">BUGCROWD</span><span class="link-val">Mohammed Ayaan</span></div><span class="link-arrow">→</span></a>
-    <a href="https://hackerone.com" class="link-card" target="_blank"><div class="link-icon">🔓</div><div class="link-info"><span class="link-label">HACKERONE</span><span class="link-val">Mohammed Ayaan</span></div><span class="link-arrow">→</span></a>
-    <a href="https://www.fiverr.com/nomeanno" class="link-card" target="_blank"><div class="link-icon">💼</div><div class="link-info"><span class="link-label">FIVERR</span><span class="link-val">nomeanno</span></div><span class="link-arrow">→</span></a>
-    <a href="https://ayaankit-pro.onrender.com" class="link-card" target="_blank"><div class="link-icon">🔐</div><div class="link-info"><span class="link-label">AYAANKIT PRO</span><span class="link-val">Live Tool</span></div><span class="link-arrow">→</span></a>
-    <a href="https://mdayyuuu-arch.github.io/netguard-ai" class="link-card" target="_blank"><div class="link-icon">🛡️</div><div class="link-info"><span class="link-label">NETGUARD AI</span><span class="link-val">Live Dashboard</span></div><span class="link-arrow">→</span></a>
-    <a href="https://github.com/mdayyuuu-arch/udhaari-tracker" class="link-card" target="_blank"><div class="link-icon">💰</div><div class="link-info"><span class="link-label">UDHAARI TRACKER</span><span class="link-val">GitHub Repo</span></div><span class="link-arrow">→</span></a>
-  </div>
-</div>
-<div class="divider"></div>
-<div class="section" id="contact">
-  <div class="section-tag">// 04 — CONNECT</div>
-  <h2 class="section-title">CONTACT</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;max-width:700px">
-    <a href="mailto:mdayaan0702@gmail.com" class="link-card"><div class="link-icon">📧</div><div class="link-info"><span class="link-label">EMAIL</span><span class="link-val">mdayaan0702@gmail.com</span></div><span class="link-arrow">→</span></a>
-    <a href="https://www.linkedin.com/in/mohammed-ayaan01" class="link-card" target="_blank"><div class="link-icon">🔗</div><div class="link-info"><span class="link-label">LINKEDIN</span><span class="link-val">Mohammed Ayaan</span></div><span class="link-arrow">→</span></a>
-  </div>
-</div>
 <footer>
-  <div class="footer-left">© 2026 <span>MOHAMMED AYAAN</span> — MCET HYDERABAD</div>
-  <div style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:#3a6a4a;letter-spacing:2px">MECH FUSION FOUNDER · ETHICAL HACKER · AI BUILDER</div>
+  <div class="footer-text">© 2026 <span>MOHAMMED AYAAN</span> — MCET HYDERABAD · MECH FUSION FOUNDER · ETHICAL HACKER · AI BUILDER</div>
 </footer>
+
 <script>
-const canvas=document.getElementById('globe-bg'),ctx=canvas.getContext('2d');
-let W,H;
-function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
-resize();window.addEventListener('resize',resize);
-const points=[];
-for(let i=0;i<200;i++){
-  const lat=(Math.random()-0.5)*Math.PI;
-  const lon=Math.random()*Math.PI*2;
-  points.push({lat,lon,size:Math.random()*2+0.5});
+// UNIVERSE PARTICLE SYSTEM
+const canvas = document.getElementById('universe');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [], nebulas = [];
+
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
 }
-let angle=0;
-function project(lat,lon,R,cx,cy){
-  const x=R*Math.cos(lat)*Math.sin(lon+angle);
-  const y=R*Math.sin(lat);
-  const z=R*Math.cos(lat)*Math.cos(lon+angle);
-  return{x:cx+x,y:cy-y,z,visible:z>0};
+resize();
+window.addEventListener('resize', resize);
+
+// Stars
+for(let i = 0; i < 200; i++){
+  particles.push({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.5 + 0.2,
+    speed: Math.random() * 0.3 + 0.05,
+    opacity: Math.random() * 0.8 + 0.2,
+    twinkle: Math.random() * Math.PI * 2,
+    color: Math.random() > 0.8 ? '#00ffaa' : Math.random() > 0.5 ? '#00aaff' : '#ffffff'
+  });
 }
-const lines=[];
-for(let lat=-80;lat<=80;lat+=20)lines.push({type:'lat',val:lat*Math.PI/180});
-for(let lon=0;lon<360;lon+=30)lines.push({type:'lon',val:lon*Math.PI/180});
-function drawGlobe(){
-  const R=Math.min(W,H)*0.35;
-  const cx=W*0.75,cy=H*0.5;
-  ctx.fillStyle='rgba(1,10,4,0.12)';ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle='rgba(0,255,136,0.06)';ctx.lineWidth=0.5;
-  lines.forEach(l=>{
+
+// Nebula clouds
+for(let i = 0; i < 5; i++){
+  nebulas.push({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 300 + 100,
+    color: Math.random() > 0.5 ? 'rgba(0,255,170,0.015)' : 'rgba(0,100,255,0.015)',
+    speed: (Math.random() - 0.5) * 0.1
+  });
+}
+
+// Shooting stars
+let shootingStars = [];
+function addShootingStar(){
+  if(Math.random() > 0.97){
+    shootingStars.push({
+      x: Math.random() * W,
+      y: Math.random() * H * 0.5,
+      len: Math.random() * 150 + 50,
+      speed: Math.random() * 8 + 4,
+      opacity: 1,
+      angle: Math.PI / 4 + (Math.random() - 0.5) * 0.5
+    });
+  }
+}
+
+let frame = 0;
+function animate(){
+  ctx.fillStyle = 'rgba(0,0,5,0.15)';
+  ctx.fillRect(0, 0, W, H);
+
+  // Nebulas
+  nebulas.forEach(n => {
+    n.x += n.speed;
+    if(n.x > W + n.r) n.x = -n.r;
+    const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
+    grad.addColorStop(0, n.color);
+    grad.addColorStop(1, 'transparent');
+    ctx.fillStyle = grad;
     ctx.beginPath();
-    let first=true;
-    if(l.type==='lat'){
-      for(let lo=0;lo<360;lo+=2){
-        const p=project(l.val,lo*Math.PI/180,R,cx,cy);
-        if(p.visible){first?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);first=false}
-        else first=true;
-      }
-    }else{
-      for(let la=-90;la<=90;la+=2){
-        const p=project(la*Math.PI/180,l.val,R,cx,cy);
-        if(p.visible){first?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);first=false}
-        else first=true;
-      }
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // Stars
+  particles.forEach(p => {
+    p.twinkle += 0.02;
+    p.y -= p.speed;
+    if(p.y < -5) p.y = H + 5;
+    const alpha = p.opacity * (0.7 + 0.3 * Math.sin(p.twinkle));
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.color.replace(')', `,${alpha})`).replace('rgb', 'rgba');
+    ctx.fill();
+    // Glow for bright stars
+    if(p.r > 1){
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+      ctx.fillStyle = p.color.replace(')', `,${alpha * 0.1})`).replace('rgb', 'rgba');
+      ctx.fill();
     }
+  });
+
+  // Shooting stars
+  addShootingStar();
+  shootingStars = shootingStars.filter(s => s.opacity > 0);
+  shootingStars.forEach(s => {
+    ctx.beginPath();
+    ctx.moveTo(s.x, s.y);
+    ctx.lineTo(s.x - Math.cos(s.angle) * s.len, s.y - Math.sin(s.angle) * s.len);
+    const grad = ctx.createLinearGradient(s.x, s.y, s.x - Math.cos(s.angle) * s.len, s.y - Math.sin(s.angle) * s.len);
+    grad.addColorStop(0, `rgba(0,255,170,${s.opacity})`);
+    grad.addColorStop(1, 'transparent');
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 1.5;
     ctx.stroke();
+    s.x += Math.cos(s.angle) * s.speed;
+    s.y += Math.sin(s.angle) * s.speed;
+    s.opacity -= 0.02;
   });
-  points.forEach(p=>{
-    const proj=project(p.lat,p.lon,R,cx,cy);
-    if(proj.visible){
-      ctx.beginPath();ctx.arc(proj.x,proj.y,p.size,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,255,136,${0.3+proj.z/R*0.7})`;ctx.fill();
+
+  // Grid overlay
+  if(frame % 3 === 0){
+    ctx.strokeStyle = 'rgba(0,255,170,0.015)';
+    ctx.lineWidth = 0.5;
+    const grid = 80;
+    for(let x = 0; x < W; x += grid){
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, H);
+      ctx.stroke();
+    }
+    for(let y = 0; y < H; y += grid){
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(W, y);
+      ctx.stroke();
+    }
+  }
+
+  frame++;
+  requestAnimationFrame(animate);
+}
+animate();
+
+// SCROLL REVEAL
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) e.target.classList.add('visible');
+  });
+}, {threshold: 0.1});
+reveals.forEach(r => observer.observe(r));
+
+// COUNT UP ANIMATION
+function countUp(el, target){
+  let current = 0;
+  const step = target / 40;
+  const timer = setInterval(() => {
+    current += step;
+    if(current >= target){
+      el.textContent = target + '+';
+      clearInterval(timer);
+    } else {
+      el.textContent = Math.floor(current);
+    }
+  }, 40);
+}
+
+const statNums = document.querySelectorAll('[data-count]');
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      countUp(e.target, parseInt(e.target.dataset.count));
+      statsObserver.unobserve(e.target);
     }
   });
-  ctx.beginPath();
-  ctx.arc(cx,cy,R,0,Math.PI*2);
-  ctx.strokeStyle='rgba(0,255,136,0.15)';ctx.lineWidth=1;ctx.stroke();
-  angle+=0.003;
-  requestAnimationFrame(drawGlobe);
-}
-drawGlobe();
-const roles=['AI & Computer Vision Builder','Ethical Hacker & CTF Player','Mech Fusion Founder — MCET','Python & Flask Developer','AWS Certified Cloud Developer'];
-let ri=0,ci=0,del=false;
-const tw=document.getElementById('tw');
-function type(){const cur=roles[ri];
-if(!del){tw.innerHTML=cur.slice(0,++ci)+'<span class="cursor-blink">█</span>';
-if(ci===cur.length){del=true;setTimeout(type,2000);return}}
-else{tw.innerHTML=cur.slice(0,--ci)+'<span class="cursor-blink">█</span>';
-if(ci===0){del=false;ri=(ri+1)%roles.length}}
-setTimeout(type,del?35:75)}
-type();
+});
+statNums.forEach(s => statsObserver.observe(s));
+
+// MOUSE PARALLAX
+document.addEventListener('mousemove', (e) => {
+  const x = (e.clientX / W - 0.5) * 20;
+  const y = (e.clientY / H - 0.5) * 20;
+  document.querySelector('.hero-name').style.textShadow = `${x}px ${y}px 30px rgba(0,255,170,0.3)`;
+});
+
+// GLITCH on hero name
+const heroName = document.querySelector('.hero-name');
+setInterval(() => {
+  if(Math.random() > 0.95){
+    heroName.style.transform = `translate(${(Math.random()-0.5)*4}px, ${(Math.random()-0.5)*2}px)`;
+    setTimeout(() => heroName.style.transform = '', 100);
+  }
+}, 500);
 </script>
 </body>
 </html>
-HTMLEOF
-  
+
