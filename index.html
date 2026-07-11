@@ -1,546 +1,182 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mohammed Ayaan | AI Engineer & Ethical Hacker</title>
-<meta name="description" content="Full Stack AI Engineer, Ethical Hacker, Founder of Mech Fusion. Building the future from an Android phone.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --void:#000005;
-  --plasma:#00ffaa;
-  --plasma2:#00aaff;
-  --plasma3:#aa00ff;
-  --warn:#ffaa00;
-  --text:#e0e0e0;
-  --dim:#666;
-  --card:rgba(0,255,170,0.03);
-  --border:rgba(0,255,170,0.15);
-}
-html{scroll-behavior:smooth}
-body{background:var(--void);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden}
+<!-- ===== UNIFIED POINT CLOUD BACKGROUND (paste before </body>) ===== -->
+<canvas id="pc-bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;"></canvas>
 
-/* CANVAS */
-#universe{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+<div id="pc-controls" style="position:fixed;bottom:16px;left:16px;display:flex;gap:6px;flex-wrap:wrap;z-index:1000;max-width:calc(100% - 32px);">
+  <button class="pc-btn" data-mode="network" style="background:rgba(0,255,170,0.08);border:1px solid rgba(0,255,170,0.35);color:#00ffaa;font-family:'Courier New',monospace;font-size:9px;padding:5px 9px;border-radius:4px;cursor:pointer;letter-spacing:0.5px;">NETWORK</button>
+  <button class="pc-btn" data-mode="sphere" style="background:rgba(0,255,170,0.08);border:1px solid rgba(0,255,170,0.35);color:#00ffaa;font-family:'Courier New',monospace;font-size:9px;padding:5px 9px;border-radius:4px;cursor:pointer;letter-spacing:0.5px;">SPHERE</button>
+  <button class="pc-btn" data-mode="wave" style="background:rgba(0,255,170,0.08);border:1px solid rgba(0,255,170,0.35);color:#00ffaa;font-family:'Courier New',monospace;font-size:9px;padding:5px 9px;border-radius:4px;cursor:pointer;letter-spacing:0.5px;">WAVE</button>
+  <button class="pc-btn" data-mode="galaxy" style="background:rgba(0,255,170,0.08);border:1px solid rgba(0,255,170,0.35);color:#00ffaa;font-family:'Courier New',monospace;font-size:9px;padding:5px 9px;border-radius:4px;cursor:pointer;letter-spacing:0.5px;">GALAXY</button>
+</div>
 
-/* SCANLINE */
-.scanline{position:fixed;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--plasma),transparent);opacity:0.4;z-index:1;animation:scan 4s linear infinite;pointer-events:none}
-@keyframes scan{0%{top:-3px}100%{top:100vh}}
-
-/* NOISE */
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.4;z-index:1;pointer-events:none}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,255,170,0.08);backdrop-filter:blur(20px);background:rgba(0,0,5,0.8)}
-.nav-logo{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;color:var(--plasma);letter-spacing:4px}
-.nav-status{display:flex;align-items:center;gap:8px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim)}
-.pulse{width:6px;height:6px;border-radius:50%;background:var(--plasma);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,255,170,0.4)}50%{opacity:0.6;box-shadow:0 0 0 8px rgba(0,255,170,0)}}
-
-/* HERO */
-.hero{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px}
-.hero-inner{max-width:900px}
-.hero-eyebrow{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--plasma);letter-spacing:6px;margin-bottom:32px;opacity:0.8}
-.hero-name{font-family:'Orbitron',monospace;font-size:clamp(42px,10vw,96px);font-weight:900;line-height:0.9;margin-bottom:24px;background:linear-gradient(135deg,#fff 0%,var(--plasma) 40%,var(--plasma2) 70%,var(--plasma3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s ease-in-out infinite}
-@keyframes shimmer{0%,100%{filter:brightness(1)}50%{filter:brightness(1.2)}}
-.hero-title{font-family:'Share Tech Mono',monospace;font-size:clamp(12px,2vw,18px);color:var(--plasma2);letter-spacing:3px;margin-bottom:40px}
-.hero-desc{font-size:16px;color:var(--dim);line-height:1.8;max-width:600px;margin:0 auto 48px}
-.hero-desc span{color:var(--text)}
-.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn-primary{padding:14px 32px;background:transparent;border:1px solid var(--plasma);color:var(--plasma);font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;cursor:pointer;text-decoration:none;transition:all 0.3s;position:relative;overflow:hidden}
-.btn-primary::before{content:'';position:absolute;inset:0;background:var(--plasma);transform:translateX(-100%);transition:transform 0.3s;z-index:-1}
-.btn-primary:hover{color:#000;box-shadow:0 0 30px var(--plasma)}
-.btn-primary:hover::before{transform:translateX(0)}
-.btn-secondary{padding:14px 32px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--dim);font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;cursor:pointer;text-decoration:none;transition:all 0.3s}
-.btn-secondary:hover{border-color:var(--plasma2);color:var(--plasma2)}
-
-/* STATS */
-.stats{display:flex;gap:48px;justify-content:center;margin-top:64px;flex-wrap:wrap}
-.stat{text-align:center}
-.stat-num{font-family:'Orbitron',monospace;font-size:32px;font-weight:900;color:var(--plasma);display:block}
-.stat-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:2px;margin-top:4px}
-
-/* SECTIONS */
-section{position:relative;z-index:2;padding:100px 24px}
-.section-inner{max-width:1100px;margin:0 auto}
-.section-header{margin-bottom:64px}
-.section-eyebrow{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--plasma);letter-spacing:4px;margin-bottom:12px}
-.section-title{font-family:'Orbitron',monospace;font-size:clamp(24px,4vw,40px);font-weight:700;color:#fff}
-
-/* PROJECTS GRID */
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;background:var(--border)}
-.project-card{background:var(--void);padding:32px;transition:all 0.4s;position:relative;overflow:hidden;border:1px solid transparent}
-.project-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,255,170,0.05),transparent);opacity:0;transition:opacity 0.4s}
-.project-card:hover{background:rgba(0,255,170,0.03);border-color:rgba(0,255,170,0.2);transform:translateY(-4px)}
-.project-card:hover::before{opacity:1}
-.project-card.featured{grid-column:span 2;background:linear-gradient(135deg,rgba(0,255,170,0.05),rgba(0,170,255,0.03))}
-@media(max-width:768px){.project-card.featured{grid-column:span 1}}
-.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
-.card-icon{font-size:28px}
-.badge{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;padding:4px 10px;border-radius:2px}
-.badge-live{background:rgba(0,255,170,0.1);color:var(--plasma);border:1px solid rgba(0,255,170,0.3)}
-.badge-build{background:rgba(255,170,0,0.1);color:var(--warn);border:1px solid rgba(255,170,0,0.3)}
-.badge-plan{background:rgba(170,0,255,0.1);color:var(--plasma3);border:1px solid rgba(170,0,255,0.3)}
-.card-title{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;color:#fff;margin-bottom:12px;letter-spacing:1px}
-.card-desc{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:20px}
-.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.tag{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--plasma2);border:1px solid rgba(0,170,255,0.2);padding:3px 8px;letter-spacing:1px}
-.card-link{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--plasma);letter-spacing:2px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s}
-.card-link:hover{gap:16px;color:#fff}
-
-/* TERMINAL SECTION */
-.terminal-box{background:#000;border:1px solid rgba(0,255,170,0.2);padding:32px;font-family:'Share Tech Mono',monospace;max-width:700px;margin:0 auto;position:relative}
-.terminal-bar{display:flex;gap:8px;margin-bottom:24px}
-.terminal-dot{width:12px;height:12px;border-radius:50%}
-.t1{background:#ff5f57}.t2{background:#febc2e}.t3{background:#28c840}
-.terminal-line{font-size:13px;margin-bottom:8px;line-height:1.6}
-.t-prompt{color:var(--plasma)}
-.t-cmd{color:#fff}
-.t-out{color:var(--dim)}
-.t-highlight{color:var(--plasma2)}
-.cursor{display:inline-block;width:8px;height:14px;background:var(--plasma);animation:blink 1s step-end infinite;vertical-align:middle}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-
-/* CERTS */
-.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.cert-card{padding:20px 24px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;gap:16px;transition:all 0.3s}
-.cert-card:hover{border-color:rgba(0,255,170,0.3);transform:translateX(4px)}
-.cert-icon{font-size:24px;flex-shrink:0}
-.cert-name{font-family:'Share Tech Mono',monospace;font-size:11px;color:#fff;margin-bottom:4px;letter-spacing:1px}
-.cert-org{font-size:11px;color:var(--dim)}
-
-/* LINKS */
-.links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-.link-card{padding:16px 20px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;gap:16px;text-decoration:none;transition:all 0.3s;cursor:pointer}
-.link-card:hover{border-color:var(--plasma);background:rgba(0,255,170,0.05)}
-.link-card:hover .link-arrow{transform:translateX(8px);color:var(--plasma)}
-.link-icon{font-size:20px;flex-shrink:0}
-.link-label{font-family:'Share Tech Mono',monospace;font-size:11px;color:#fff;letter-spacing:1px}
-.link-val{font-size:11px;color:var(--dim);margin-top:2px}
-.link-arrow{margin-left:auto;color:var(--dim);transition:all 0.3s;font-family:'Share Tech Mono',monospace}
-
-/* CONTACT */
-.contact-box{max-width:600px;text-align:center;margin:0 auto}
-.contact-email{font-family:'Orbitron',monospace;font-size:clamp(16px,3vw,28px);color:var(--plasma);margin:32px 0;word-break:break-all}
-.contact-social{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px}
-.social-link{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:2px;padding:8px 16px;border:1px solid var(--border);transition:all 0.3s}
-.social-link:hover{color:var(--plasma);border-color:var(--plasma)}
-
-/* FOOTER */
-footer{position:relative;z-index:2;text-align:center;padding:40px 24px;border-top:1px solid var(--border)}
-.footer-text{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:3px}
-.footer-text span{color:var(--plasma)}
-
-/* DIVIDER */
-.divider{display:flex;align-items:center;gap:16px;margin-bottom:48px}
-.divider-line{flex:1;height:1px;background:var(--border)}
-.divider-text{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:3px;white-space:nowrap}
-
-/* GLOW EFFECTS */
-.glow-plasma{text-shadow:0 0 20px var(--plasma)}
-.glow-box{box-shadow:0 0 40px rgba(0,255,170,0.05),inset 0 0 40px rgba(0,255,170,0.02)}
-
-/* SCROLL REVEAL */
-.reveal{opacity:0;transform:translateY(30px);transition:all 0.7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-@media(max-width:600px){
-  nav{padding:12px 16px}
-  section{padding:60px 16px}
-  .stats{gap:32px}
-  .hero-btns{flex-direction:column;align-items:center}
-}
-</style>
-</head>
-<body>
-
-<canvas id="universe"></canvas>
-<div class="scanline"></div>
-
-<nav>
-  <div class="nav-logo">AYAAN.SYS</div>
-  <div class="nav-status">
-    <div class="pulse"></div>
-    <span>ONLINE // MCET HYD</span>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">MOHAMMED AYAAN // FULL STACK AI ENGINEER</div>
-    <h1 class="hero-name">AYAAN</h1>
-    <div class="hero-title">ETHICAL HACKER · AI BUILDER · MECH FUSION FOUNDER</div>
-    <p class="hero-desc">
-      2nd year ME student at <span>MCET Hyderabad</span>. Building AI tools, hunting bugs, 
-      creating assistive tech — <span>all from an Android phone.</span>
-      No laptop. No excuses. Just code.
-    </p>
-    <div class="hero-btns">
-      <a href="#projects" class="btn-primary">VIEW PROJECTS</a>
-      <a href="#links" class="btn-secondary">ALL LINKS</a>
-    </div>
-    <div class="stats">
-      <div class="stat"><span class="stat-num" data-count="9">0</span><span class="stat-label">PROJECTS</span></div>
-      <div class="stat"><span class="stat-num">2nd</span><span class="stat-label">YEAR MCET</span></div>
-      <div class="stat"><span class="stat-num" data-count="7">0</span><span class="stat-label">CERTIFICATES</span></div>
-      <div class="stat"><span class="stat-num">∞</span><span class="stat-label">AMBITION</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">// 01 — PROJECTS</div>
-      <h2 class="section-title">WHAT I'VE BUILT</h2>
-    </div>
-    <div class="projects-grid reveal">
-
-      <div class="project-card featured">
-        <div class="card-top"><div class="card-icon">🖥️</div><span class="badge badge-live">● LIVE</span></div>
-        <div class="card-title">AYAAN OS</div>
-        <p class="card-desc">Full-stack AI hacker dashboard. AI Roaster, Recon Engine, Money Tracker & Meme Forge — 4 powerful modules in one app. Built entirely from Android phone using Termux. Powered by Groq LLaMA 3.3 70B.</p>
-        <div class="card-tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Groq AI</span><span class="tag">Render</span><span class="tag">Termux</span></div>
-        <a href="https://ayaan-os.onrender.com" class="card-link" target="_blank">VIEW LIVE →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="card-top"><div class="card-icon">🛡️</div><span class="badge badge-live">● LIVE</span></div>
-        <div class="card-title">NETGUARD AI</div>
-        <p class="card-desc">ML-powered network security dashboard. Real-time packet capture via tshark, anomaly detection, live traffic monitoring.</p>
-        <div class="card-tags"><span class="tag">Python</span><span class="tag">ML</span><span class="tag">tshark</span><span class="tag">Termux</span></div>
-        <a href="https://mdayyuuu-arch.github.io/netguard-ai" class="card-link" target="_blank">VIEW LIVE →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="card-top"><div class="card-icon">🔐</div><span class="badge badge-live">● LIVE</span></div>
-        <div class="card-title">AYAANKIT PRO</div>
-        <p class="card-desc">Full SaaS pentesting toolkit. Port scanner, vulnerability checker, DNS/SSL tools, subdomain finder, PDF report generator.</p>
-        <div class="card-tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SaaS</span><span class="tag">Render</span></div>
-        <a href="https://ayaankit-pro.onrender.com" class="card-link" target="_blank">VIEW LIVE →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="card-top"><div class="card-icon">🤖</div><span class="badge badge-live">● LIVE</span></div>
-        <div class="card-title">FRIDAY AI ASSISTANT</div>
-        <p class="card-desc">Iron Man inspired AI assistant. React + Claude API with Gmail & Calendar integration. HUD interface with voice support.</p>
-        <div class="card-tags"><span class="tag">React</span><span class="tag">Claude API</span><span class="tag">MCP</span><span class="tag">JS</span></div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-top"><div class="card-icon">💰</div><span class="badge badge-live">● LIVE</span></div>
-        <div class="card-title">UDHAARI TRACKER</div>
-        <p class="card-desc">Friend debt tracker with WhatsApp reminder automation. JSON ledger, copy-paste reminders, pending amount tracker.</p>
-        <div class="card-tags"><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">CLI</span></div>
-        <a href="https://github.com/mdayyuuu-arch/udhaari-tracker" class="card-link" target="_blank">VIEW GITHUB →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="card-top"><div class="card-icon">🔥</div><span class="badge badge-live">● LIVE</span></div>
-        <div class="card-title">FIRE DETECTION</div>
-        <p class="card-desc">Real-time fire detection using computer vision. Deployed on Kaggle from Android. ML model for video stream analysis.</p>
-        <div class="card-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Kaggle</span><span class="tag">CV</span></div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-top"><div class="card-icon">🛣️</div><span class="badge badge-live">● LIVE</span></div>
-        <div class="card-title">LANE DETECTION</div>
-        <p class="card-desc">Autonomous vehicle lane detection. Real-time road footage processing to identify lane markings using image processing.</p>
-        <div class="card-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">NumPy</span><span class="tag">AI</span></div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-top"><div class="card-icon">👥</div><span class="badge badge-build">◐ BUILDING</span></div>
-        <div class="card-title">CROWD DETECTION</div>
-        <p class="card-desc">AI-powered crowd density detection for public safety. Deep learning model for real-time crowd level monitoring.</p>
-        <div class="card-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Deep Learning</span></div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-top"><div class="card-icon">🦯</div><span class="badge badge-plan">○ STARTUP</span></div>
-        <div class="card-title">SMART WALKING STICK</div>
-        <p class="card-desc">IoT assistive walking stick for visually impaired. ESP32 obstacle detection with haptic feedback for rural India.</p>
-        <div class="card-tags"><span class="tag">ESP32</span><span class="tag">IoT</span><span class="tag">Arduino</span><span class="tag">Hardware</span></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- TERMINAL -->
-<section style="padding:60px 24px">
-  <div class="section-inner">
-    <div class="terminal-box glow-box reveal">
-      <div class="terminal-bar">
-        <div class="terminal-dot t1"></div>
-        <div class="terminal-dot t2"></div>
-        <div class="terminal-dot t3"></div>
-      </div>
-      <div class="terminal-line"><span class="t-prompt">ayaan@mcet:~$ </span><span class="t-cmd">whoami</span></div>
-      <div class="terminal-line"><span class="t-out">Mohammed Ayaan — Full Stack AI Engineer & Ethical Hacker</span></div>
-      <div class="terminal-line"><span class="t-prompt">ayaan@mcet:~$ </span><span class="t-cmd">cat skills.txt</span></div>
-      <div class="terminal-line"><span class="t-highlight">React · Node.js · Python · Flask · Groq AI · Claude API</span></div>
-      <div class="terminal-line"><span class="t-highlight">Nmap · SQLMap · Burp Suite · OSINT · Bug Bounty</span></div>
-      <div class="terminal-line"><span class="t-highlight">TryHackMe Top 4% · HackerOne · Bugcrowd</span></div>
-      <div class="terminal-line"><span class="t-prompt">ayaan@mcet:~$ </span><span class="t-cmd">cat setup.txt</span></div>
-      <div class="terminal-line"><span class="t-out">Device: Android Phone · IDE: Termux · Hosting: Render + GitHub Pages</span></div>
-      <div class="terminal-line"><span class="t-prompt">ayaan@mcet:~$ </span><span class="t-cmd">echo $MOTTO</span></div>
-      <div class="terminal-line"><span class="t-highlight">"No laptop. No excuses. Just build."</span></div>
-      <div class="terminal-line"><span class="t-prompt">ayaan@mcet:~$ </span><span class="cursor"></span></div>
-    </div>
-  </div>
-</section>
-
-<!-- CERTS -->
-<section id="certs">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">// 02 — CREDENTIALS</div>
-      <h2 class="section-title">CERTIFICATES</h2>
-    </div>
-    <div class="certs-grid reveal">
-      <div class="cert-card"><div class="cert-icon">🎓</div><div><div class="cert-name">NPTEL — ETHICS IN ENGINEERING</div><div class="cert-org">NPTEL · IIT · 2026</div></div></div>
-      <div class="cert-card"><div class="cert-icon">☁️</div><div><div class="cert-name">AWS CLOUD DEVELOPMENT</div><div class="cert-org">Amazon Web Services · 2026</div></div></div>
-      <div class="cert-card"><div class="cert-icon">🐍</div><div><div class="cert-name">PYTHON PROGRAMMING</div><div class="cert-org">Amazon Web Services · 2026</div></div></div>
-      <div class="cert-card"><div class="cert-icon">📊</div><div><div class="cert-name">TATA DATA VISUALISATION</div><div class="cert-org">Forage · Tata Group · 2026</div></div></div>
-      <div class="cert-card"><div class="cert-icon">🤖</div><div><div class="cert-name">TATA iQ GenAI</div><div class="cert-org">Forage · Tata iQ · 2026</div></div></div>
-      <div class="cert-card"><div class="cert-icon">🏭</div><div><div class="cert-name">CNC PROGRAMMING</div><div class="cert-org">MCET Hyderabad · 2025</div></div></div>
-      <div class="cert-card"><div class="cert-icon">🎓</div><div><div class="cert-name">GITHUB STUDENT PACK</div><div class="cert-org">GitHub Education · 2026</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- LINKS -->
-<section id="links">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">// 03 — PROFILES</div>
-      <h2 class="section-title">ALL LINKS</h2>
-    </div>
-    <div class="links-grid reveal">
-      <a href="https://github.com/mdayyuuu-arch" class="link-card" target="_blank"><div class="link-icon">⌨️</div><div><div class="link-label">GITHUB</div><div class="link-val">mdayyuuu-arch</div></div><span class="link-arrow">→</span></a>
-      <a href="https://linkedin.com/in/mohammed-ayaan01" class="link-card" target="_blank"><div class="link-icon">🔗</div><div><div class="link-label">LINKEDIN</div><div class="link-val">Mohammed Ayaan</div></div><span class="link-arrow">→</span></a>
-      <a href="https://tryhackme.com/p/pvt1iamayaan" class="link-card" target="_blank"><div class="link-icon">🏴</div><div><div class="link-label">TRYHACKME</div><div class="link-val">Top 4% Global</div></div><span class="link-arrow">→</span></a>
-      <a href="https://bugcrowd.com" class="link-card" target="_blank"><div class="link-icon">🐛</div><div><div class="link-label">BUGCROWD</div><div class="link-val">Mohammed Ayaan</div></div><span class="link-arrow">→</span></a>
-      <a href="https://hackerone.com" class="link-card" target="_blank"><div class="link-icon">🔓</div><div><div class="link-label">HACKERONE</div><div class="link-val">Mohammed Ayaan</div></div><span class="link-arrow">→</span></a>
-      <a href="https://fiverr.com/nomeanno" class="link-card" target="_blank"><div class="link-icon">💼</div><div><div class="link-label">FIVERR</div><div class="link-val">nomeanno</div></div><span class="link-arrow">→</span></a>
-      <a href="https://ayaan-os.onrender.com" class="link-card" target="_blank"><div class="link-icon">🖥️</div><div><div class="link-label">AYAAN OS</div><div class="link-val">AI Hacker Dashboard</div></div><span class="link-arrow">→</span></a>
-      <a href="https://ayaankit-pro.onrender.com" class="link-card" target="_blank"><div class="link-icon">🔐</div><div><div class="link-label">AYAANKIT PRO</div><div class="link-val">Live Tool</div></div><span class="link-arrow">→</span></a>
-      <a href="https://mdayyuuu-arch.github.io/netguard-ai" class="link-card" target="_blank"><div class="link-icon">🛡️</div><div><div class="link-label">NETGUARD AI</div><div class="link-val">Live Dashboard</div></div><span class="link-arrow">→</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-inner">
-    <div class="section-header reveal" style="text-align:center;margin-bottom:32px">
-      <div class="section-eyebrow">// 04 — CONNECT</div>
-      <h2 class="section-title">LET'S BUILD</h2>
-    </div>
-    <div class="contact-box reveal">
-      <p style="color:var(--dim);font-size:14px;line-height:1.8">Open for collaborations, bug bounty partnerships, freelance projects, and conversations about building the future.</p>
-      <div class="contact-email">mdayaan0702@gmail.com</div>
-      <div class="contact-social">
-        <a href="https://linkedin.com/in/mohammed-ayaan01" class="social-link" target="_blank">LINKEDIN</a>
-        <a href="https://github.com/mdayyuuu-arch" class="social-link" target="_blank">GITHUB</a>
-        <a href="https://fiverr.com/nomeanno" class="social-link" target="_blank">FIVERR</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-text">© 2026 <span>MOHAMMED AYAAN</span> — MCET HYDERABAD · MECH FUSION FOUNDER · ETHICAL HACKER · AI BUILDER</div>
-</footer>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// UNIVERSE PARTICLE SYSTEM
-const canvas = document.getElementById('universe');
-const ctx = canvas.getContext('2d');
-let W, H, particles = [], nebulas = [];
+(function () {
+  const canvas = document.getElementById('pc-bg-canvas');
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x000005, 0.012);
 
-function resize(){
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 0, 32);
 
-// Stars
-for(let i = 0; i < 200; i++){
-  particles.push({
-    x: Math.random() * W,
-    y: Math.random() * H,
-    r: Math.random() * 1.5 + 0.2,
-    speed: Math.random() * 0.3 + 0.05,
-    opacity: Math.random() * 0.8 + 0.2,
-    twinkle: Math.random() * Math.PI * 2,
-    color: Math.random() > 0.8 ? '#00ffaa' : Math.random() > 0.5 ? '#00aaff' : '#ffffff'
-  });
-}
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-// Nebula clouds
-for(let i = 0; i < 5; i++){
-  nebulas.push({
-    x: Math.random() * W,
-    y: Math.random() * H,
-    r: Math.random() * 300 + 100,
-    color: Math.random() > 0.5 ? 'rgba(0,255,170,0.015)' : 'rgba(0,100,255,0.015)',
-    speed: (Math.random() - 0.5) * 0.1
-  });
-}
+  const isMobile = window.innerWidth < 768;
+  const MAX_COUNT = isMobile ? 3500 : 6000;
 
-// Shooting stars
-let shootingStars = [];
-function addShootingStar(){
-  if(Math.random() > 0.97){
-    shootingStars.push({
-      x: Math.random() * W,
-      y: Math.random() * H * 0.5,
-      len: Math.random() * 150 + 50,
-      speed: Math.random() * 8 + 4,
-      opacity: 1,
-      angle: Math.PI / 4 + (Math.random() - 0.5) * 0.5
-    });
-  }
-}
+  const positions = new Float32Array(MAX_COUNT * 3);
+  const basePositions = new Float32Array(MAX_COUNT * 3);
+  const colors = new Float32Array(MAX_COUNT * 3);
 
-let frame = 0;
-function animate(){
-  ctx.fillStyle = 'rgba(0,0,5,0.15)';
-  ctx.fillRect(0, 0, W, H);
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-  // Nebulas
-  nebulas.forEach(n => {
-    n.x += n.speed;
-    if(n.x > W + n.r) n.x = -n.r;
-    const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
-    grad.addColorStop(0, n.color);
-    grad.addColorStop(1, 'transparent');
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-    ctx.fill();
+  const material = new THREE.PointsMaterial({
+    size: isMobile ? 0.18 : 0.22,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.45,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
   });
 
-  // Stars
-  particles.forEach(p => {
-    p.twinkle += 0.02;
-    p.y -= p.speed;
-    if(p.y < -5) p.y = H + 5;
-    const alpha = p.opacity * (0.7 + 0.3 * Math.sin(p.twinkle));
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = p.color.replace(')', `,${alpha})`).replace('rgb', 'rgba');
-    ctx.fill();
-    // Glow for bright stars
-    if(p.r > 1){
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
-      ctx.fillStyle = p.color.replace(')', `,${alpha * 0.1})`).replace('rgb', 'rgba');
-      ctx.fill();
-    }
-  });
+  const pointCloud = new THREE.Points(geometry, material);
+  scene.add(pointCloud);
 
-  // Shooting stars
-  addShootingStar();
-  shootingStars = shootingStars.filter(s => s.opacity > 0);
-  shootingStars.forEach(s => {
-    ctx.beginPath();
-    ctx.moveTo(s.x, s.y);
-    ctx.lineTo(s.x - Math.cos(s.angle) * s.len, s.y - Math.sin(s.angle) * s.len);
-    const grad = ctx.createLinearGradient(s.x, s.y, s.x - Math.cos(s.angle) * s.len, s.y - Math.sin(s.angle) * s.len);
-    grad.addColorStop(0, `rgba(0,255,170,${s.opacity})`);
-    grad.addColorStop(1, 'transparent');
-    ctx.strokeStyle = grad;
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    s.x += Math.cos(s.angle) * s.speed;
-    s.y += Math.sin(s.angle) * s.speed;
-    s.opacity -= 0.02;
-  });
+  const cyan = new THREE.Color(0x00ffaa);
+  const teal = new THREE.Color(0x00aaff);
 
-  // Grid overlay
-  if(frame % 3 === 0){
-    ctx.strokeStyle = 'rgba(0,255,170,0.015)';
-    ctx.lineWidth = 0.5;
-    const grid = 80;
-    for(let x = 0; x < W; x += grid){
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, H);
-      ctx.stroke();
-    }
-    for(let y = 0; y < H; y += grid){
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(W, y);
-      ctx.stroke();
+  let activeCount = MAX_COUNT;
+
+  function buildNetwork() {
+    activeCount = Math.min(900, MAX_COUNT);
+    for (let i = 0; i < activeCount; i++) {
+      basePositions[i*3] = (Math.random()-0.5) * 55;
+      basePositions[i*3+1] = (Math.random()-0.5) * 40;
+      basePositions[i*3+2] = (Math.random()-0.5) * 35;
+      const c = cyan.clone().lerp(teal, Math.random());
+      colors[i*3]=c.r; colors[i*3+1]=c.g; colors[i*3+2]=c.b;
     }
   }
 
-  frame++;
-  requestAnimationFrame(animate);
-}
-animate();
+  function buildSphere() {
+    activeCount = MAX_COUNT;
+    for (let i = 0; i < activeCount; i++) {
+      const phi = Math.acos(-1 + (2 * i) / activeCount);
+      const theta = Math.sqrt(activeCount * Math.PI) * phi;
+      const r = 15;
+      basePositions[i*3] = r * Math.cos(theta) * Math.sin(phi);
+      basePositions[i*3+1] = r * Math.sin(theta) * Math.sin(phi);
+      basePositions[i*3+2] = r * Math.cos(phi);
+      const c = cyan.clone().lerp(teal, Math.random());
+      colors[i*3]=c.r; colors[i*3+1]=c.g; colors[i*3+2]=c.b;
+    }
+  }
 
-// SCROLL REVEAL
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if(e.isIntersecting) e.target.classList.add('visible');
+  function buildWave() {
+    activeCount = MAX_COUNT;
+    const side = Math.ceil(Math.sqrt(activeCount));
+    for (let i = 0; i < activeCount; i++) {
+      const x = (i % side) - side / 2;
+      const z = Math.floor(i / side) - side / 2;
+      const y = Math.sin(x * 0.3) * Math.cos(z * 0.3) * 4;
+      basePositions[i*3] = x * 0.9;
+      basePositions[i*3+1] = y;
+      basePositions[i*3+2] = z * 0.9;
+      const c = cyan.clone().lerp(teal, Math.random());
+      colors[i*3]=c.r; colors[i*3+1]=c.g; colors[i*3+2]=c.b;
+    }
+  }
+
+  function buildGalaxy() {
+    activeCount = MAX_COUNT;
+    const branches = 4;
+    for (let i = 0; i < activeCount; i++) {
+      const radius = Math.pow(Math.random(), 0.6) * 20;
+      const branchAngle = ((i % branches) / branches) * Math.PI * 2;
+      const spin = radius * 0.25;
+      const spread = 0.4;
+      basePositions[i*3] = Math.cos(branchAngle + spin) * radius + (Math.random()-0.5) * spread * radius;
+      basePositions[i*3+1] = (Math.random()-0.5) * spread * 2;
+      basePositions[i*3+2] = Math.sin(branchAngle + spin) * radius + (Math.random()-0.5) * spread * radius;
+      const c = cyan.clone().lerp(teal, Math.random());
+      colors[i*3]=c.r; colors[i*3+1]=c.g; colors[i*3+2]=c.b;
+    }
+  }
+
+  const builders = { network: buildNetwork, sphere: buildSphere, wave: buildWave, galaxy: buildGalaxy };
+
+  let morphFrom = new Float32Array(MAX_COUNT * 3);
+  let morphProgress = 1;
+  let currentMode = 'network';
+
+  buildNetwork();
+  positions.set(basePositions);
+
+  function switchMode(name) {
+    morphFrom.set(positions);
+    builders[name]();
+    for (let i = activeCount; i < MAX_COUNT; i++) {
+      basePositions[i*3]=0; basePositions[i*3+1]=0; basePositions[i*3+2]=0;
+      colors[i*3]=0; colors[i*3+1]=0; colors[i*3+2]=0;
+    }
+    geometry.attributes.color.needsUpdate = true;
+    morphProgress = 0;
+    currentMode = name;
+  }
+
+  document.querySelectorAll('.pc-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchMode(btn.dataset.mode));
   });
-}, {threshold: 0.1});
-reveals.forEach(r => observer.observe(r));
 
-// COUNT UP ANIMATION
-function countUp(el, target){
-  let current = 0;
-  const step = target / 40;
-  const timer = setInterval(() => {
-    current += step;
-    if(current >= target){
-      el.textContent = target + '+';
-      clearInterval(timer);
+  let mouseX = 0, mouseY = 0, targetRotX = 0, targetRotY = 0;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  const clock = new THREE.Clock();
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+
+    targetRotX += (mouseY * 0.2 - targetRotX) * 0.03;
+    targetRotY += (mouseX * 0.3 - targetRotY) * 0.03;
+    pointCloud.rotation.x = targetRotX * 0.2;
+    pointCloud.rotation.y = t * 0.03 + targetRotY * 0.3;
+
+    const posAttr = geometry.attributes.position.array;
+    if (morphProgress < 1) {
+      morphProgress += 0.02;
+      const p = Math.min(morphProgress, 1);
+      const ease = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2, 2)/2;
+      for (let i = 0; i < MAX_COUNT * 3; i++) {
+        posAttr[i] = morphFrom[i] + (basePositions[i] - morphFrom[i]) * ease;
+      }
     } else {
-      el.textContent = Math.floor(current);
+      if (currentMode === 'network') {
+        for (let i = 0; i < activeCount; i++) {
+          posAttr[i*3+1] += 0.01;
+          if (posAttr[i*3+1] > 22) posAttr[i*3+1] = -22;
+        }
+      } else {
+        for (let i = 0; i < activeCount; i++) {
+          posAttr[i*3] = basePositions[i*3] + Math.sin(t + i*0.05) * 0.06;
+        }
+      }
     }
-  }, 40);
-}
-
-const statNums = document.querySelectorAll('[data-count]');
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if(e.isIntersecting){
-      countUp(e.target, parseInt(e.target.dataset.count));
-      statsObserver.unobserve(e.target);
-    }
-  });
-});
-statNums.forEach(s => statsObserver.observe(s));
-
-// MOUSE PARALLAX
-document.addEventListener('mousemove', (e) => {
-  const x = (e.clientX / W - 0.5) * 20;
-  const y = (e.clientY / H - 0.5) * 20;
-  document.querySelector('.hero-name').style.textShadow = `${x}px ${y}px 30px rgba(0,255,170,0.3)`;
-});
-
-// GLITCH on hero name
-const heroName = document.querySelector('.hero-name');
-setInterval(() => {
-  if(Math.random() > 0.95){
-    heroName.style.transform = `translate(${(Math.random()-0.5)*4}px, ${(Math.random()-0.5)*2}px)`;
-    setTimeout(() => heroName.style.transform = '', 100);
+    geometry.attributes.position.needsUpdate = true;
+    renderer.render(scene, camera);
   }
-}, 500);
-</script>
-</body>
-</html>
+  animate();
 
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+})();
+</script>
+<!-- ===== END BACKGROUND SNIPPET ===== -->
