@@ -547,5 +547,48 @@ setInterval(() => {
 </script>
 <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="mohammed-ayaan01" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/mohammed-ayaan01?trk=profile-badge">Mohammed A.</a></div>
 <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+  <audio id="bgMusic" loop>
+  <source src="Slava Funk - PagalMass.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicToggle" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  background: #000;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+">🔇</button>
+
+<script>
+  const music = document.getElementById('bgMusic');
+  const toggleBtn = document.getElementById('musicToggle');
+  let started = false;
+
+  document.addEventListener('click', () => {
+    if (!started) {
+      music.play().catch(() => {});
+      toggleBtn.textContent = '🔊';
+      started = true;
+    }
+  }, { once: true });
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (music.paused) {
+      music.play();
+      toggleBtn.textContent = '🔊';
+    } else {
+      music.pause();
+      toggleBtn.textContent = '🔇';
+    }
+  });
+</script>
 </body>
 </html>
