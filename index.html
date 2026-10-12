@@ -159,28 +159,13 @@ footer{position:relative;z-index:2;text-align:center;padding:40px 24px;border-to
   .stats{gap:32px}
   .hero-btns{flex-direction:column;align-items:center}
 }
-/* MUSIC DOCK */
-.music-dock{position:fixed;right:16px;bottom:16px;z-index:999;width:224px;padding:12px;background:rgba(0,0,5,0.92);border:1px solid var(--border);backdrop-filter:blur(12px);box-shadow:0 0 30px rgba(0,255,170,0.10),inset 0 0 30px rgba(0,255,170,0.03);font-family:'Share Tech Mono',monospace}
-.music-dock::before,.music-dock::after{content:'';position:absolute;width:10px;height:10px;border:1px solid var(--plasma);pointer-events:none}
-.music-dock::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
-.music-dock::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
-.md-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.md-label{font-size:9px;letter-spacing:3px;color:var(--plasma)}
-.md-dot{margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--plasma);animation:pulse 2s ease-in-out infinite}
-.md-eq{display:inline-flex;align-items:flex-end;gap:2px;height:12px}
-.md-eq i{display:block;width:2px;height:3px;background:var(--plasma);transition:height .2s}
-.music-dock.playing .md-eq i{animation:eq 0.9s ease-in-out infinite}
-.music-dock.playing .md-eq i:nth-child(2){animation-delay:.15s}
-.music-dock.playing .md-eq i:nth-child(3){animation-delay:.3s}
-.music-dock.playing .md-eq i:nth-child(4){animation-delay:.45s}
-@keyframes eq{0%,100%{height:3px}50%{height:12px}}
-.md-title{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:#fff;letter-spacing:1px;line-height:1.4}
-.md-artist{font-size:10px;color:var(--plasma2);letter-spacing:2px;margin:2px 0 10px}
-.md-video{width:100%;height:200px;background:#000;border:1px solid rgba(0,255,170,0.2);overflow:hidden}
-.md-video iframe{width:100%;height:100%;display:block}
-.md-note{display:none;margin-top:8px;font-size:10px;color:var(--dim);line-height:1.6}
-.md-note a{color:var(--plasma2);text-decoration:none;letter-spacing:1px}
-@media(max-width:600px){.music-dock{right:10px;bottom:10px;width:212px;padding:10px}}
+/* MUSIC BUTTON */
+.music-btn{position:fixed;right:16px;bottom:16px;z-index:999;width:52px;height:52px;border-radius:50%;background:rgba(0,0,5,0.9);border:1px solid var(--plasma);color:var(--plasma);font-size:20px;cursor:pointer;box-shadow:0 0 18px rgba(0,255,170,0.25);transition:all .3s;-webkit-tap-highlight-color:transparent}
+.music-btn:hover{box-shadow:0 0 30px rgba(0,255,170,0.6)}
+.music-btn.playing{animation:glow 2s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 30px rgba(0,255,170,0.6)}}
+.music-tag{position:fixed;right:78px;bottom:26px;z-index:999;max-width:calc(100vw - 100px);padding:7px 12px;background:rgba(0,0,5,0.9);border:1px solid var(--border);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--plasma);opacity:0;pointer-events:none;transition:opacity .4s}
+.music-tag.show{opacity:1}
 </style>
 </head>
 <body>
@@ -583,73 +568,49 @@ setInterval(() => {
 </script>
 <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="mohammed-ayaan01" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/mohammed-ayaan01?trk=profile-badge">Mohammed A.</a></div>
 <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
-  <div id="musicDock" class="music-dock">
-  <div class="md-head">
-    <span class="md-eq"><i></i><i></i><i></i><i></i></span>
-    <span class="md-label">NOW PLAYING</span>
-    <span class="md-dot"></span>
-  </div>
-  <div class="md-title">Ra One Theme (SV Rendition)</div>
-  <div class="md-artist">Suraj Verma</div>
-  <div class="md-video"><div id="ytPlayer"></div></div>
-  <div id="ytNote" class="md-note">
-    Embedding is turned off for this video.
-    <a href="https://www.youtube.com/watch?v=kYJbO3W4r0E" target="_blank" rel="noopener">LISTEN ON YOUTUBE →</a>
-  </div>
-</div>
+  <audio id="bgMusic" loop preload="auto">
+  <source src="bgm.mp3" type="audio/mpeg">
+</audio>
+
+<div id="musicTag" class="music-tag">♪ BACKGROUND MUSIC</div>
+<button id="musicToggle" class="music-btn" aria-label="Toggle music">🔇</button>
 
 <script>
-  // Load the YouTube IFrame API
-  const ytTag = document.createElement('script');
-  ytTag.src = 'https://www.youtube.com/iframe_api';
-  document.head.appendChild(ytTag);
+  const music = document.getElementById('bgMusic');
+  const toggleBtn = document.getElementById('musicToggle');
+  const musicTag = document.getElementById('musicTag');
+  let started = false;
+  music.volume = 0.4;
 
-  let ytPlayer, ytReady = false, ytStarted = false;
+  music.addEventListener('play',  () => { toggleBtn.textContent = '🔊'; toggleBtn.classList.add('playing'); musicTag.classList.add('show'); });
+  music.addEventListener('pause', () => { toggleBtn.textContent = '🔇'; toggleBtn.classList.remove('playing'); musicTag.classList.remove('show'); });
 
-  window.onYouTubeIframeAPIReady = function () {
-    ytPlayer = new YT.Player('ytPlayer', {
-      width: '100%',
-      height: '100%',
-      videoId: 'kYJbO3W4r0E',
-      playerVars: { playsinline: 1, autoplay: 1, mute: 1, start: 26, end: 42, rel: 0, modestbranding: 1 },
-      events: {
-        onReady: () => { ytReady = true; ytPlayer.setVolume(60); },
-        // Loop only the 26s-42s part of the video
-        onStateChange: (e) => {
-          const dock = document.getElementById('musicDock');
-          dock.classList.toggle('playing', e.data === YT.PlayerState.PLAYING);
-          if (e.data === YT.PlayerState.ENDED) { ytPlayer.seekTo(26, true); ytPlayer.playVideo(); }
-        },
-        onError: (e) => {
-          // 101 / 150 = embedding disabled by the uploader
-          if (e.data === 101 || e.data === 150) {
-            document.getElementById('ytPlayer').style.display = 'none';
-            document.getElementById('ytNote').style.display = 'block';
-          }
-        }
-      }
-    });
-  };
-
-  // Start the song on the visitor's first tap anywhere (browsers block autoplay)
+  // Browsers block autoplay, so start on the visitor's first tap anywhere
   function startOnFirstTouch() {
-    if (ytStarted || !ytReady) return;
-    ytStarted = true;
-    try { ytPlayer.unMute(); ytPlayer.setVolume(70); ytPlayer.playVideo(); } catch (e) {}
+    if (started) return;
+    started = true;
+    music.play().catch(() => { started = false; });
     document.removeEventListener('pointerdown', startOnFirstTouch);
   }
   document.addEventListener('pointerdown', startOnFirstTouch);
 
+  toggleBtn.addEventListener('pointerdown', (e) => e.stopPropagation());
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    started = true;
+    if (music.paused) { music.play().catch(() => {}); } else { music.pause(); }
+  });
+
   // Whole project card is tappable: opens that project's link
   document.querySelectorAll('.project-card').forEach(card => {
     const link = card.querySelector('a.card-link');
-    if (!link) return;                       // cards without a link stay as they are
+    if (!link) return;
     card.classList.add('clickable');
     card.setAttribute('role', 'link');
     card.tabIndex = 0;
     const open = () => window.open(link.href, '_blank', 'noopener');
     card.addEventListener('click', (e) => {
-      if (e.target.closest('a')) return;     // the link itself already works
+      if (e.target.closest('a')) return;
       open();
     });
     card.addEventListener('keydown', (e) => { if (e.key === 'Enter') open(); });
