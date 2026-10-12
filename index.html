@@ -77,9 +77,11 @@ section{position:relative;z-index:2;padding:100px 24px}
 /* PROJECTS GRID */
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;background:var(--border)}
 .project-card{background:var(--void);padding:32px;transition:all 0.4s;position:relative;overflow:hidden;border:1px solid transparent}
-.project-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,255,170,0.05),transparent);opacity:0;transition:opacity 0.4s}
+.project-card::before{content:'';pointer-events:none;position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,255,170,0.05),transparent);opacity:0;transition:opacity 0.4s}
 .project-card:hover{background:rgba(0,255,170,0.03);border-color:rgba(0,255,170,0.2);transform:translateY(-4px)}
 .project-card:hover::before{opacity:1}
+.project-card.clickable{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.project-card.clickable:active{transform:scale(0.98)}
 .project-card.featured{grid-column:span 2;background:linear-gradient(135deg,rgba(0,255,170,0.05),rgba(0,170,255,0.03))}
 @media(max-width:768px){.project-card.featured{grid-column:span 1}}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
@@ -157,6 +159,28 @@ footer{position:relative;z-index:2;text-align:center;padding:40px 24px;border-to
   .stats{gap:32px}
   .hero-btns{flex-direction:column;align-items:center}
 }
+/* MUSIC DOCK */
+.music-dock{position:fixed;right:16px;bottom:16px;z-index:999;width:224px;padding:12px;background:rgba(0,0,5,0.92);border:1px solid var(--border);backdrop-filter:blur(12px);box-shadow:0 0 30px rgba(0,255,170,0.10),inset 0 0 30px rgba(0,255,170,0.03);font-family:'Share Tech Mono',monospace}
+.music-dock::before,.music-dock::after{content:'';position:absolute;width:10px;height:10px;border:1px solid var(--plasma);pointer-events:none}
+.music-dock::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.music-dock::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.md-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.md-label{font-size:9px;letter-spacing:3px;color:var(--plasma)}
+.md-dot{margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--plasma);animation:pulse 2s ease-in-out infinite}
+.md-eq{display:inline-flex;align-items:flex-end;gap:2px;height:12px}
+.md-eq i{display:block;width:2px;height:3px;background:var(--plasma);transition:height .2s}
+.music-dock.playing .md-eq i{animation:eq 0.9s ease-in-out infinite}
+.music-dock.playing .md-eq i:nth-child(2){animation-delay:.15s}
+.music-dock.playing .md-eq i:nth-child(3){animation-delay:.3s}
+.music-dock.playing .md-eq i:nth-child(4){animation-delay:.45s}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+.md-title{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:#fff;letter-spacing:1px;line-height:1.4}
+.md-artist{font-size:10px;color:var(--plasma2);letter-spacing:2px;margin:2px 0 10px}
+.md-video{width:100%;height:200px;background:#000;border:1px solid rgba(0,255,170,0.2);overflow:hidden}
+.md-video iframe{width:100%;height:100%;display:block}
+.md-note{display:none;margin-top:8px;font-size:10px;color:var(--dim);line-height:1.6}
+.md-note a{color:var(--plasma2);text-decoration:none;letter-spacing:1px}
+@media(max-width:600px){.music-dock{right:10px;bottom:10px;width:212px;padding:10px}}
 </style>
 </head>
 <body>
@@ -559,47 +583,76 @@ setInterval(() => {
 </script>
 <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="mohammed-ayaan01" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/mohammed-ayaan01?trk=profile-badge">Mohammed A.</a></div>
 <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
-  <audio id="bgMusic" loop>
-  <source src="Slava Funk - PagalMass.mp3" type="audio/mpeg">
-</audio>
-
-<button id="musicToggle" style="
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 999;
-  background: #000;
-  color: #fff;
-  border: 1px solid #fff;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 20px;
-  cursor: pointer;
-">🔇</button>
+  <div id="musicDock" class="music-dock">
+  <div class="md-head">
+    <span class="md-eq"><i></i><i></i><i></i><i></i></span>
+    <span class="md-label">NOW PLAYING</span>
+    <span class="md-dot"></span>
+  </div>
+  <div class="md-title">Ra One Theme (SV Rendition)</div>
+  <div class="md-artist">Suraj Verma</div>
+  <div class="md-video"><div id="ytPlayer"></div></div>
+  <div id="ytNote" class="md-note">
+    Embedding is turned off for this video.
+    <a href="https://www.youtube.com/watch?v=kYJbO3W4r0E" target="_blank" rel="noopener">LISTEN ON YOUTUBE →</a>
+  </div>
+</div>
 
 <script>
-  const music = document.getElementById('bgMusic');
-  const toggleBtn = document.getElementById('musicToggle');
-  let started = false;
+  // Load the YouTube IFrame API
+  const ytTag = document.createElement('script');
+  ytTag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(ytTag);
 
-  document.addEventListener('click', () => {
-    if (!started) {
-      music.play().catch(() => {});
-      toggleBtn.textContent = '🔊';
-      started = true;
-    }
-  }, { once: true });
+  let ytPlayer, ytReady = false, ytStarted = false;
 
-  toggleBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (music.paused) {
-      music.play();
-      toggleBtn.textContent = '🔊';
-    } else {
-      music.pause();
-      toggleBtn.textContent = '🔇';
-    }
+  window.onYouTubeIframeAPIReady = function () {
+    ytPlayer = new YT.Player('ytPlayer', {
+      width: '100%',
+      height: '100%',
+      videoId: 'kYJbO3W4r0E',
+      playerVars: { playsinline: 1, autoplay: 1, mute: 1, start: 26, end: 42, rel: 0, modestbranding: 1 },
+      events: {
+        onReady: () => { ytReady = true; ytPlayer.setVolume(60); },
+        // Loop only the 26s-42s part of the video
+        onStateChange: (e) => {
+          const dock = document.getElementById('musicDock');
+          dock.classList.toggle('playing', e.data === YT.PlayerState.PLAYING);
+          if (e.data === YT.PlayerState.ENDED) { ytPlayer.seekTo(26, true); ytPlayer.playVideo(); }
+        },
+        onError: (e) => {
+          // 101 / 150 = embedding disabled by the uploader
+          if (e.data === 101 || e.data === 150) {
+            document.getElementById('ytPlayer').style.display = 'none';
+            document.getElementById('ytNote').style.display = 'block';
+          }
+        }
+      }
+    });
+  };
+
+  // Start the song on the visitor's first tap anywhere (browsers block autoplay)
+  function startOnFirstTouch() {
+    if (ytStarted || !ytReady) return;
+    ytStarted = true;
+    try { ytPlayer.unMute(); ytPlayer.setVolume(70); ytPlayer.playVideo(); } catch (e) {}
+    document.removeEventListener('pointerdown', startOnFirstTouch);
+  }
+  document.addEventListener('pointerdown', startOnFirstTouch);
+
+  // Whole project card is tappable: opens that project's link
+  document.querySelectorAll('.project-card').forEach(card => {
+    const link = card.querySelector('a.card-link');
+    if (!link) return;                       // cards without a link stay as they are
+    card.classList.add('clickable');
+    card.setAttribute('role', 'link');
+    card.tabIndex = 0;
+    const open = () => window.open(link.href, '_blank', 'noopener');
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;     // the link itself already works
+      open();
+    });
+    card.addEventListener('keydown', (e) => { if (e.key === 'Enter') open(); });
   });
 </script>
 </body>
